@@ -1,0 +1,38 @@
+<div class="queue-container">
+    <h2>Live Queue</h2>
+<!--thead/tbody split header from data rows, tr = row, th = header cell, td = data cell-->
+    <table>
+        <thead>
+            <tr>
+                <th>Token</th>
+                <th>Patient</th>
+                <th>Status</th>
+                <th>Est. Wait</th>
+                <th>Alert</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(token of tokens(); track token.id){
+                <tr>
+                    <td>{{ token.tokenNumber }}</td>
+                    <td>{{ token.patientName }}</td>
+                    <td>{{ token.status }}</td>
+                    <td>{{ token.estimatedWaitMinutes }}</td>
+                    <td>
+                        @if(token.shouldAlert){
+                            <span>🔔</span>
+                        }
+                    </td>
+                    <td>
+                        <!--only show the button for tokens still waiting, not already completed.-->
+                        @if (token.status == 'WAITING'){
+                            <!--Angular's event binding syntax, calls the method when clicked.-->
+                            <button (click)="completeToken(token.id)">Complete</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

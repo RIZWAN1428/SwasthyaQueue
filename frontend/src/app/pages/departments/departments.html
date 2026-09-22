@@ -1,0 +1,19 @@
+<div class="departments-container">
+    <h2>Departments</h2>
+    <ul>
+        <!-- track dept.id tells Angular how to efficiently identify each item (using its unique id),
+          so Angular can update the list efficiently if data changes later, 
+          rather than re-rendering everything from scratch.-->
+        @for (dept of departments(); track dept.id){
+            <li>
+                <!--passing the department's actual id as a URL parameter (e.g., /queue/1).-->
+                 <a [routerLink]="['/queue', dept.id]">{{ dept.name }}</a>
+                 @if (dept.avgTime){
+                    <span> - avg {{ dept.avgTime }}</span>
+                 }   
+            </li>
+        }@empty {
+        <li>There are no items.</li>
+        }
+    </ul>
+</div>

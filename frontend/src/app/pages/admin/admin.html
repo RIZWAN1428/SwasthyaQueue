@@ -1,0 +1,69 @@
+<div class="admin-container">
+    <h2>Create Department</h2>
+
+    <form [formGroup] = "createDeptForm" (ngSubmit)="onCreateDepartment()">
+         <div class="form-field">
+            <label for="name">Name</label>
+            <input id="name" type = "text" formControlName="name"/>
+        </div>
+
+         <button type="submit">Register</button>
+    </form>
+    @if (createDeptMessage()) {
+    <p>{{ createDeptMessage() }}</p>
+    }
+
+    <h2>Set Average Time</h2>
+    <form [formGroup]="avgTimeForm" (ngSubmit)="onSetAvgTime()">
+        <div class="form-field">
+            <label for="deptSelect">Department</label>
+            <select id="deptSelect" formControlName="departmentId">
+                <option value="">Select a department</option>
+                @for (dept of departments(); track dept.id){
+                    <option [value]="dept.id">{{ dept.name }}</option>
+                }
+            </select>
+        </div>
+
+         <div class="form-field">
+            <label for="avgTime">Average Time (minutes)</label>
+            <input id="avgTime" type="number" formControlName="avgTime" />
+        </div>
+
+        <button type="submit">Update</button>
+
+    </form>
+    @if (avgTimeMessage()){
+        <p>{{ avgTimeMessage() }}</p>
+    }
+
+
+    <h2>Link Prerequisite</h2>
+    <form [formGroup]="addPrerequisiteForm" (ngSubmit)="onAddPrerequisite()">
+        <div class="form-field">
+            <label for="mainDept">Department</label>
+            <select id="mainDept" formControlName="departmentId">
+            <option value="">Select a department</option>
+            @for (dept of departments(); track dept.id) {
+                <option [value]="dept.id">{{ dept.name }}</option>
+            }
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="prereqDept">Requires (prerequisite)</label>
+            <select id="prereqDept" formControlName="prerequisiteDepartmentId">
+            <option value="">Select a department</option>
+            @for (dept of departments(); track dept.id) {
+                <option [value]="dept.id">{{ dept.name }}</option>
+            }
+            </select>
+        </div>
+
+        <button type="submit">Link</button>
+    </form>
+
+    @if (prerequisiteMessage()){
+        <p> {{ prerequisiteMessage() }}</p>
+    }
+</div>

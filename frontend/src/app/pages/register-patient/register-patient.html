@@ -1,0 +1,26 @@
+<div class="register-container">
+    <h2>Register Patient</h2>
+
+    <form [formGroup] = "patientForm" (ngSubmit)="onSubmit()">
+        <div class="form-field">
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type = "text" formControlName="fullName"/>
+        </div>
+
+        <div class="form-field">
+            <label for="dateOfBirth">Date Of Birth</label>
+            <input id="dateOfBirth" type="date" formControlName="dateOfBirth" />
+        </div>
+
+        <div class="form-field">
+            <label for="phoneNumber">Phone Number</label>
+            <input id="phoneNumber" type="text" formControlName="phoneNumber"/>
+        </div>
+
+        <button type="submit">Register</button>
+
+    </form>
+    @if(errorMessage){
+        <p class="error">{{ errorMessage }}</p>
+    }
+</div>
