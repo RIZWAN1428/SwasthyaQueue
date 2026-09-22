@@ -10,6 +10,8 @@ import { Router,RouterLink, RouterOutlet, } from '@angular/router';
   styleUrl: './main-layout.scss',
 })
 export class MainLayout {
+  
+  isLoggedIn = !!localStorage.getItem('token');
   constructor(private router: Router){}
 
   logout(){

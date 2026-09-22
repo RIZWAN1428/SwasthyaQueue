@@ -11,6 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 export class Queue implements OnInit {
 
   tokens = signal<QueueTokenResponse[]>([]);
+  //!! — converts the result to a plain true/false 
+  // (double negation: ! flips it to boolean-opposite, second ! flips it back correctly typed as boolean)
+  isLoggedIn = !!localStorage.getItem('token');
   
 //Angular's way to read URL parameters (here, the :id from /queue/:id).
   constructor(private route: ActivatedRoute, private queueTokenService: QueueToken) {}

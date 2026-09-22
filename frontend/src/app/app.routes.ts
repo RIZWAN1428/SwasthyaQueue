@@ -6,6 +6,8 @@ import { RegisterPatient } from './pages/register-patient/register-patient';
 import { CreateToken } from './pages/create-token/create-token';
 import { Admin } from './pages/admin/admin';
 import { MainLayout } from './layout/main-layout/main-layout';
+import { authGuard } from './guards/auth-guard';
+import { adminGuard } from './guards/admin-guard';
 
 export const routes: Routes = [
     {path: 'login', component: Login},
@@ -13,11 +15,12 @@ export const routes: Routes = [
         path: '',
         component: MainLayout,
         children:[
-            {path: 'departments', component: Departments},
             {path: 'queue/:id', component: Queue},
-            {path: 'register-patient', component: RegisterPatient}, 
-            {path: 'create-token/:patientId', component: CreateToken},
-            {path: 'admin', component:Admin},
+            {path: 'departments', component: Departments, canActivate: [authGuard]},
+            {path: 'queue/:id', component: Queue,  canActivate: [authGuard]},
+            {path: 'register-patient', component: RegisterPatient, canActivate: [authGuard]}, 
+            {path: 'create-token/:patientId', component: CreateToken,  canActivate: [authGuard]},
+            {path: 'admin', component:Admin,  canActivate: [adminGuard]},
         ],
     },
 ];

@@ -9,7 +9,9 @@
                 <th>Status</th>
                 <th>Est. Wait</th>
                 <th>Alert</th>
-                <th>Action</th>
+                @if(isLoggedIn){
+                     <th>Action</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -26,7 +28,7 @@
                     </td>
                     <td>
                         <!--only show the button for tokens still waiting, not already completed.-->
-                        @if (token.status == 'WAITING'){
+                        @if (isLoggedIn && token.status === 'WAITING'){
                             <!--Angular's event binding syntax, calls the method when clicked.-->
                             <button (click)="completeToken(token.id)">Complete</button>
                         }

@@ -89,3 +89,7 @@ now add createdepartment in department service then in admin.ts add method.
 similarly done for avg tiime and alink prerequisite.
 
 now work on style and ui. build main layout and add router outlet, so that it can be in every page except login for that we set up in app routes.
+now add guard as auth guard to protect route like which required login.
+ng generate guard guards/auth --functional => --functional picks Angular's newer, simpler guard style — a plain function, not a class.
+now for admin build guard.
+after that updte app routes.
