@@ -19,5 +19,9 @@ export class Auth {
       return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { userName, password });
     }
 
+    registerStaff(userName:string, password:String){
+      return this.http.post<{id: number; userName: string; role: string }>(this.apiUrl, {userName,password});
+    }
+
 
 }

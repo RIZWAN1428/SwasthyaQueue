@@ -93,3 +93,4 @@ now add guard as auth guard to protect route like which required login.
 ng generate guard guards/auth --functional => --functional picks Angular's newer, simpler guard style — a plain function, not a class.
 now for admin build guard.
 after that updte app routes.
+now create a page for register so that staff can register by admin......also link register patient api in navbar.

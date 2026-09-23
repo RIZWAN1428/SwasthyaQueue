@@ -8,9 +8,11 @@ import { Admin } from './pages/admin/admin';
 import { MainLayout } from './layout/main-layout/main-layout';
 import { authGuard } from './guards/auth-guard';
 import { adminGuard } from './guards/admin-guard';
+import { Register } from './pages/register/register';
 
 export const routes: Routes = [
     {path: 'login', component: Login},
+    { path: 'register', component: Register },
     {
         path: '',
         component: MainLayout,

@@ -9,10 +9,23 @@ import { Router,RouterLink, RouterOutlet, } from '@angular/router';
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
 })
+interface JwtPayload {
+  sub: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
 export class MainLayout {
   
   isLoggedIn = !!localStorage.getItem('token');
-  constructor(private router: Router){}
+  payload: JwtPayload | null  = null;
+  constructor(private router: Router){
+    const token = localStorage.getItem('token');
+
+    if(token){
+      this.payload = JSON.parse(atob(token.split('.')[1]));
+    }
+  }
 
   logout(){
     localStorage.removeItem('token');

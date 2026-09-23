@@ -66,4 +66,25 @@
     @if (prerequisiteMessage()){
         <p> {{ prerequisiteMessage() }}</p>
     }
+
+
+    <h2>Register Staff</h2>
+
+    <form [formGroup]="registerStaffForm" (ngSubmit)="onRegisterStaff()">
+    <div class="form-field">
+        <label for="staffUserName">Username</label>
+        <input id="staffUserName" type="text" formControlName="userName" />
+    </div>
+
+    <div class="form-field">
+        <label for="staffPassword">Password</label>
+        <input id="staffPassword" type="password" formControlName="password" />
+    </div>
+
+    <button type="submit">Register</button>
+    </form>
+
+    @if (registerStaffMessage()) {
+    <p>{{ registerStaffMessage() }}</p>
+    }
 </div>

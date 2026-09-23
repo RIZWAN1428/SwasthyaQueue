@@ -2,6 +2,9 @@
 <header class="app-header">
     <div class="nav-links">
         <a routerLink="/departments">Departments</a>
+        @if(payload?.role === 'STAFF'){
+        <a routerLink="/register-patient">Register Patient</a>
+        }
         <a routerLink="/admin">Admin</a>
     </div>
 
