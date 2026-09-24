@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { Router,RouterLink, RouterOutlet, } from '@angular/router';
-
+interface JwtPayload {
+  sub: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
 @Component({
   selector: 'app-main-layout',
   //"frame" (header + nav links + logout button) that stays the same on every page, with a second, smaller <router-outlet>
@@ -9,12 +14,7 @@ import { Router,RouterLink, RouterOutlet, } from '@angular/router';
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
 })
-interface JwtPayload {
-  sub: string;
-  role: string;
-  iat: number;
-  exp: number;
-}
+
 export class MainLayout {
   
   isLoggedIn = !!localStorage.getItem('token');

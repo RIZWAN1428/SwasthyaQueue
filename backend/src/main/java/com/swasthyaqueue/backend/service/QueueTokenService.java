@@ -94,15 +94,7 @@ public class QueueTokenService {
         waitingTokens.sort((a,b) -> Double.compare(b.getPriorityScore(), a.getPriorityScore()));
 
         //Calculate wait timing per department for each patients.
-        for(int i=0; i<waitingTokens.size();i++){
-            QueueToken token = waitingTokens.get(i);
-            int peopleAhead = i;
-            double avgTimePerPatient = (department.getAvgTime() != null) ? department.getAvgTime() : 10.0;
-            double estimatedWait = peopleAhead*avgTimePerPatient;
-            token.setEstimatedWaitMinutes(estimatedWait);
-            boolean shouldAlert = estimatedWait <= 15;
-            token.setShouldAlert(shouldAlert);
-        }
+        calculateWaitTimesAndAlerts(waitingTokens, department);
         return waitingTokens;
     }
     //Build a Calculate priority Score
@@ -199,6 +191,17 @@ public class QueueTokenService {
         return queueTokenRepository.save(token);
     }
 
+    //Add this method here so that we can use in dashboard service
+    public void calculateWaitTimesAndAlerts(List<QueueToken> waitingTokens, Department department) {
+    for (int i = 0; i < waitingTokens.size(); i++) {
+        QueueToken token = waitingTokens.get(i);
+        int peopleAhead = i;
+        double avgTimePerPatient = (department.getAvgTime() != null) ? department.getAvgTime() : 10.0;
+        double estimatedWait = peopleAhead * avgTimePerPatient;
+        token.setEstimatedWaitMinutes(estimatedWait);
+        token.setShouldAlert(estimatedWait <= 15);
+    }
+}
    
 
 }   
