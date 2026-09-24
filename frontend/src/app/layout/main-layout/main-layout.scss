@@ -3,10 +3,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 var(--spacing-lg);
-  height: 60px;
-  background: var(--color-surface);
+  height: 64px;
+  background: rgba(14, 21, 38, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--color-border);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -18,47 +19,70 @@
   gap: 10px;
   text-decoration: none;
 
-  .brand-icon {
-    font-size: 22px;
+  .brand-symbol {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
   }
 
-  .brand-name {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--color-primary);
-    letter-spacing: -0.3px;
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-sub {
+      font-size: 9px;
+      font-weight: 700;
+      color: #60a5fa;
+      letter-spacing: 0.12em;
+    }
   }
 }
 
 .nav-links {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   align-items: center;
 
   a {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     color: var(--color-text-muted);
     text-decoration: none;
     font-weight: 500;
-    font-size: 14px;
-    padding: 6px 12px;
+    font-size: 13.5px;
+    padding: 7px 14px;
     border-radius: var(--radius);
-    transition: background 0.15s, color 0.15s;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
 
     .nav-icon {
-      font-size: 15px;
+      font-size: 14px;
     }
 
     &:hover {
-      background: var(--color-bg);
-      color: var(--color-text);
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
     }
 
     &.active {
-      background: #eff6ff;
-      color: var(--color-primary);
+      background: rgba(59, 130, 246, 0.12);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: #60a5fa;
       font-weight: 600;
     }
   }
@@ -67,39 +91,74 @@
 .header-actions {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: 12px;
 }
 
-.user-badge {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: var(--color-primary);
-  background: #eff6ff;
-  padding: 3px 9px;
-  border-radius: 20px;
-  border: 1px solid #bfdbfe;
+.btn-public-view {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.15s;
+
+  &:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.user-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  .user-role-dot {
+    width: 6px;
+    height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #10b981;
+  }
+
+  .user-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #93c5fd;
+  }
 }
 
 .btn-logout {
-  padding: 7px 16px;
-  background: transparent;
-  color: var(--color-danger);
-  border: 1px solid var(--color-danger);
+  padding: 6px 14px;
+  background: rgba(239, 68, 68, 0.08);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: var(--radius);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
-  transition: background 0.15s, color 0.15s;
+  font-family: var(--font-family);
+  transition: all 0.15s ease;
 
   &:hover {
-    background: var(--color-danger);
-    color: white;
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #ef4444;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
   }
 }
 
 .app-content {
-  padding: var(--spacing-lg);
-  min-height: calc(100vh - 60px);
+  padding: 32px var(--spacing-lg) 60px;
+  min-height: calc(100vh - 64px);
+  background-color: var(--color-bg);
 }

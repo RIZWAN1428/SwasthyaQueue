@@ -1,5 +1,5 @@
 .departments-page {
-  max-width: 960px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -7,14 +7,15 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
+  gap: 16px;
 
   h1 {
     margin: 0 0 4px;
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--color-text);
-    letter-spacing: -0.5px;
+    font-size: 28px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.03em;
   }
 
   .page-subtitle {
@@ -27,52 +28,57 @@
 .dept-count {
   font-size: 12px;
   font-weight: 700;
-  color: var(--color-primary);
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  padding: 5px 12px;
-  border-radius: 20px;
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 6px 14px;
+  border-radius: 999px;
   white-space: nowrap;
 }
 
 .dept-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
 }
 
 .dept-card {
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  padding: 18px var(--spacing-md);
+  padding: 22px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   text-decoration: none;
   color: var(--color-text);
-  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(37,99,235,0.1);
-    border-color: #bfdbfe;
+    box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.6), 0 0 20px rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.5);
 
     .dept-arrow {
-      transform: translateX(3px);
-      color: var(--color-primary);
+      transform: translateX(4px);
+      color: #60a5fa;
+    }
+
+    .dept-name {
+      color: #60a5fa;
     }
   }
 }
 
 .dept-card-icon {
-  font-size: 28px;
+  font-size: 24px;
   flex-shrink: 0;
   width: 48px;
   height: 48px;
-  background: #eff6ff;
-  border-radius: 10px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,38 +92,43 @@
 }
 
 .dept-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  transition: color 0.15s;
 }
 
 .dept-avg {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   font-size: 13px;
   color: var(--color-text-muted);
 
   .avg-icon {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   &.muted {
     font-style: italic;
+    color: #64748b;
   }
 }
 
 .dept-arrow {
   font-size: 18px;
   color: var(--color-text-muted);
-  transition: transform 0.15s, color 0.15s;
+  transition: transform 0.2s, color 0.2s;
 }
 
 .empty-state {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 60px var(--spacing-lg);
+  padding: 80px var(--spacing-lg);
   color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
 
   .empty-icon {
     font-size: 48px;
@@ -127,12 +138,13 @@
 
   p {
     margin: 0 0 6px;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--color-text);
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
   }
 
   small {
     font-size: 13px;
+    color: #64748b;
   }
 }

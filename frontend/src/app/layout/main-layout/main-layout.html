@@ -1,7 +1,12 @@
 <header class="app-header">
-  <div class="header-brand">
-    <span class="brand-icon">🏥</span>
-    <span class="brand-name">SwasthyaQueue</span>
+  <div class="header-brand-wrap">
+    <a routerLink="/" class="header-brand" title="View Public Landing">
+      <div class="brand-symbol">⚡</div>
+      <div class="brand-text">
+        <span class="brand-name">SwasthyaQueue</span>
+        <span class="brand-sub">PORTAL</span>
+      </div>
+    </a>
   </div>
 
   @if (isLoggedIn) {
@@ -12,12 +17,12 @@
       <a routerLink="/departments" routerLinkActive="active">
         <span class="nav-icon">🏢</span> Departments
       </a>
-      @if(payload?.role === 'STAFF'){
+      @if (payload?.role === 'STAFF') {
         <a routerLink="/register-patient" routerLinkActive="active">
           <span class="nav-icon">👤</span> Register Patient
         </a>
       }
-      @if(payload?.role === 'ADMIN'){
+      @if (payload?.role === 'ADMIN') {
         <a routerLink="/admin" routerLinkActive="active">
           <span class="nav-icon">⚙️</span> Admin
         </a>
@@ -25,7 +30,13 @@
     </nav>
 
     <div class="header-actions">
-      <span class="user-badge">{{ payload?.role }}</span>
+      <a routerLink="/" class="btn-public-view" title="View Landing Page">
+        <span>🌐 Landing</span>
+      </a>
+      <div class="user-pill">
+        <span class="user-role-dot"></span>
+        <span class="user-badge">{{ payload?.role || 'USER' }}</span>
+      </div>
       <button class="btn-logout" (click)="logout()">Logout</button>
     </div>
   }

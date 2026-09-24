@@ -1,0 +1,467 @@
+<div class="landing-container">
+  <!-- Top Navigation (Apollo-style glass navbar) -->
+  <header class="landing-header">
+    <div class="header-inner">
+      <a routerLink="/" class="brand">
+        <div class="brand-symbol">
+          <span class="pulse-ring"></span>
+          <span class="symbol-icon">⚡</span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">SwasthyaQueue</span>
+          <span class="brand-tag">CLINICAL ENGINE</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="#features">Architecture</a>
+        <a href="#priority-engine">Redis Engine</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#live-departments">Departments</a>
+      </nav>
+
+      <div class="nav-actions">
+        @if (isLoggedIn) {
+          <a routerLink="/dashboard" class="btn btn-primary btn-glow">
+            <span>Open Dashboard</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        } @else {
+          <a routerLink="/login" class="btn btn-ghost">Staff Login</a>
+          <a routerLink="/departments" class="btn btn-primary btn-glow">
+            <span>Live Queues</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        }
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-glow-backdrop"></div>
+    <div class="hero-grid-pattern"></div>
+
+    <div class="hero-content">
+      <!-- Announcement Eyebrow Badge -->
+      <div class="eyebrow-badge">
+        <span class="badge-status-dot"></span>
+        <span class="badge-text">Next-Gen Clinical Triage & Redis Priority Engine</span>
+        <span class="badge-pill">v2.4 Active</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="hero-headline">
+        Intelligent Hospital Queues.
+        <span class="text-gradient">Real-Time Redis Priority Triage.</span>
+      </h1>
+
+      <!-- Subtitle pulling architecture from every_step.md -->
+      <p class="hero-subtitle">
+        Eliminate OPD bottleneck chaos with sub-millisecond dynamic priority calculation.
+        Powered by in-memory Redis scoring (Severity × 10 + WaitTime × 0.3), strict clinical
+        department prerequisite DAGs, and automated PostgreSQL batch synchronization.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="hero-cta-group">
+        @if (isLoggedIn) {
+          <a routerLink="/dashboard" class="btn btn-lg btn-primary btn-glow">
+            <span>Enter Staff Dashboard</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        } @else {
+          <a routerLink="/login" class="btn btn-lg btn-primary btn-glow">
+            <span>Access Staff Portal</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        }
+        <a href="#live-departments" class="btn btn-lg btn-glass">
+          <span>Explore Live Queues</span>
+          <span class="btn-icon">⚡</span>
+        </a>
+      </div>
+
+      <!-- Key Metrics Row -->
+      <div class="hero-metrics">
+        <div class="metric-item">
+          <span class="metric-val">&lt; 1ms</span>
+          <span class="metric-label">Redis Scoring Latency</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-val">30s</span>
+          <span class="metric-label">PostgreSQL State Sync</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-val">100%</span>
+          <span class="metric-label">Prerequisite Dependency Enforcement</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-val">0 Lock</span>
+          <span class="metric-label">Contention on High Queue Reads</span>
+        </div>
+      </div>
+
+      <!-- High-Tech Interactive Cockpit Mockup Preview -->
+      <div class="cockpit-preview">
+        <div class="cockpit-header">
+          <div class="cockpit-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="cockpit-title">
+            <span class="status-indicator"></span>
+            LIVE CLINICAL PRIORITY ENGINE MONITOR • REDIS IN-MEMORY STREAM
+          </div>
+          <div class="cockpit-actions">
+            <span class="badge-live">LIVE TRIAGE FEED</span>
+          </div>
+        </div>
+
+        <div class="cockpit-body">
+          <div class="triage-cards-grid">
+            <!-- Simulated Patient 1 (Critical Triage) -->
+            <div class="triage-card triage-critical">
+              <div class="triage-top">
+                <div class="patient-meta">
+                  <span class="token-tag">Token #CR-104</span>
+                  <span class="triage-name">Ananya Sharma</span>
+                </div>
+                <span class="severity-badge sev-5">Severity 5 (Critical)</span>
+              </div>
+              <div class="triage-dept">
+                <span>Emergency Cardiology OPD</span>
+                <span class="dept-dot"></span>
+                <span class="wait-indicator">Wait: 42m</span>
+              </div>
+              <div class="priority-math-bar">
+                <div class="formula-label">Priority Equation:</div>
+                <div class="formula-calc">
+                  <code>(Severity 5 × 10) + (42m × 0.3) = <strong>62.6 PTS</strong></code>
+                </div>
+              </div>
+              <div class="triage-footer">
+                <span class="prereq-status ok">✓ Pathology Blood Test Verified</span>
+                <span class="redis-tag">Redis Cached</span>
+              </div>
+            </div>
+
+            <!-- Simulated Patient 2 (Consultation with Prerequisite Check) -->
+            <div class="triage-card">
+              <div class="triage-top">
+                <div class="patient-meta">
+                  <span class="token-tag">Token #OP-219</span>
+                  <span class="triage-name">Rajesh Verma</span>
+                </div>
+                <span class="severity-badge sev-3">Severity 3 (Moderate)</span>
+              </div>
+              <div class="triage-dept">
+                <span>Orthopedic Consultation</span>
+                <span class="dept-dot"></span>
+                <span class="wait-indicator">Wait: 28m</span>
+              </div>
+              <div class="priority-math-bar">
+                <div class="formula-label">Priority Equation:</div>
+                <div class="formula-calc">
+                  <code>(Severity 3 × 10) + (28m × 0.3) = <strong>38.4 PTS</strong></code>
+                </div>
+              </div>
+              <div class="triage-footer">
+                <span class="prereq-status ok">✓ X-Ray Imaging Completed</span>
+                <span class="redis-tag">Redis Cached</span>
+              </div>
+            </div>
+
+            <!-- Simulated Engine Status Panel -->
+            <div class="triage-engine-panel">
+              <div class="panel-header">
+                <span>Dual-Tier Engine Telemetry</span>
+                <span class="sync-ping">Sync in 12s</span>
+              </div>
+              <div class="telemetry-rows">
+                <div class="tele-row">
+                  <span class="tele-k">Redis Priority Store</span>
+                  <span class="tele-v success">UP (Sub-1ms Read)</span>
+                </div>
+                <div class="tele-row">
+                  <span class="tele-k">PostgreSQL Source of Truth</span>
+                  <span class="tele-v info">Synced (nextval Seq)</span>
+                </div>
+                <div class="tele-row">
+                  <span class="tele-k">Background Syncer</span>
+                  <span class="tele-v warning">@Scheduled (30000ms)</span>
+                </div>
+                <div class="tele-row">
+                  <span class="tele-k">Stateless Security</span>
+                  <span class="tele-v accent">JWT Bearer Active</span>
+                </div>
+              </div>
+              <div class="formula-callout">
+                <span class="formula-icon">💡</span>
+                <span class="formula-text"><strong>Zero Read Locks:</strong> High queue throughput queries Redis memory while Postgres stores durable state.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- Continuous Infinite Marquee / Scroller Ticker  -->
+  <!-- ============================================== -->
+  <section class="scroller-section">
+    <div class="scroller-label">
+      <span>SYSTEM ARCHITECTURE & CORE CAPABILITIES</span>
+    </div>
+
+    <div class="scroller-wrapper">
+      <div class="scroller-track">
+        <!-- Original List -->
+        @for (item of tickerItems; track item.title) {
+          <div class="ticker-pill">
+            <span class="pill-icon">{{ item.icon }}</span>
+            <span class="pill-title">{{ item.title }}</span>
+            <span class="pill-tag">{{ item.tag }}</span>
+          </div>
+        }
+        <!-- Duplicate for Seamless Infinite Loop -->
+        @for (item of tickerItems; track item.title + '-dup') {
+          <div class="ticker-pill">
+            <span class="pill-icon">{{ item.icon }}</span>
+            <span class="pill-title">{{ item.title }}</span>
+            <span class="pill-tag">{{ item.tag }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Grid Architecture & Engineering Pillars -->
+  <section id="features" class="section-container">
+    <div class="section-header-center">
+      <span class="section-eyebrow">HIGH-PERFORMANCE INFRASTRUCTURE</span>
+      <h2 class="section-title">Engineered to Solve Hospital Queue Bottlenecks</h2>
+      <p class="section-desc">
+        Traditional hospital software creates database write-locks every time a waiting room TV updates.
+        SwasthyaQueue separates read-heavy dynamic calculations from durable persistence.
+      </p>
+    </div>
+
+    <div class="bento-grid">
+      <!-- Bento Card 1: Redis Dynamic Priority Engine -->
+      <div class="bento-card bento-span-2 card-glow">
+        <div class="card-icon-wrap">⚡</div>
+        <div class="card-content">
+          <div class="card-badge">Redis In-Memory Tier</div>
+          <h3>Sub-Millisecond Dynamic Priority Engine</h3>
+          <p>
+            In busy hospitals, calculating priority scores on the fly can trigger N database writes for every queue refresh.
+            SwasthyaQueue leverages Redis key-value storage with custom serialization to compute and update live queue positions in sub-milliseconds without disk I/O drag.
+          </p>
+          <div class="tech-spec-row">
+            <span class="tech-pill">Spring Data Redis</span>
+            <span class="tech-pill">Custom RedisConfig Serializer</span>
+            <span class="tech-pill">Zero DB Write Locks</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bento Card 2: Enforced Department Prerequisite DAG -->
+      <div class="bento-card card-glow">
+        <div class="card-icon-wrap">🔗</div>
+        <div class="card-content">
+          <div class="card-badge">Clinical DAG Enforcement</div>
+          <h3>Strict Department Prerequisites</h3>
+          <p>
+            Patients cannot jump into specialized consultations without completing required diagnostics.
+            SwasthyaQueue validates that prerequisite department tokens (e.g. Pathology Blood Test) have COMPLETED status before permitting new token generation.
+          </p>
+          <div class="tech-spec-row">
+            <span class="tech-pill">DepartmentPrerequisite Entity</span>
+            <span class="tech-pill">Pre-Check Guard</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bento Card 3: Anti-Starvation Severity & Aging Equation -->
+      <div class="bento-card card-glow">
+        <div class="card-icon-wrap">⏱️</div>
+        <div class="card-content">
+          <div class="card-badge">Triage Fairness Algorithm</div>
+          <h3>Dynamic Aging & Severity Formula</h3>
+          <p>
+            Triage equation: <code>Score = (Severity × 10) + (WaitingMinutes × 0.3)</code>.
+            Critical patients (Severity 4–5) immediately bypass the queue, while patients waiting over 30 minutes steadily gain priority to guarantee anti-starvation.
+          </p>
+          <div class="tech-spec-row">
+            <span class="tech-pill">10x Severity Factor</span>
+            <span class="tech-pill">0.3x Aging Multiplier</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bento Card 4: Two-Tier State Synchronization -->
+      <div class="bento-card bento-span-2 card-glow">
+        <div class="card-icon-wrap">🔄</div>
+        <div class="card-content">
+          <div class="card-badge">Persistence Layer</div>
+          <h3>Automated Two-Tier PostgreSQL Synchronization</h3>
+          <p>
+            PostgreSQL remains the durable source of truth with database sequences (<code>nextval()</code>) guaranteeing zero token collisions.
+            A background Spring daemon configured with <code>@Scheduled(fixedRate = 30000)</code> periodically flushes recalculated priority scores from Redis back to disk.
+          </p>
+          <div class="tech-spec-row">
+            <span class="tech-pill">Spring @EnableScheduling</span>
+            <span class="tech-pill">30s Periodic Batching</span>
+            <span class="tech-pill">PostgreSQL nextval()</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Workflow Pipeline Section (From docs/every_step.md) -->
+  <section id="workflow" class="section-container workflow-section">
+    <div class="section-header-center">
+      <span class="section-eyebrow">STEP-BY-STEP CLINICAL LIFECYCLE</span>
+      <h2 class="section-title">The End-to-End Patient Flow Pipeline</h2>
+      <p class="section-desc">
+        Engineered step-by-step from reception intake to doctor consultation and token resolution.
+      </p>
+    </div>
+
+    <div class="workflow-steps-grid">
+      @for (step of workflowSteps; track step.num) {
+        <div class="step-card">
+          <div class="step-top">
+            <span class="step-num">{{ step.num }}</span>
+            <span class="step-line"></span>
+          </div>
+          <h4>{{ step.title }}</h4>
+          <p>{{ step.desc }}</p>
+          <div class="step-badge">{{ step.badge }}</div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Live Departments Showcase Section -->
+  <section id="live-departments" class="section-container">
+    <div class="section-header-between">
+      <div>
+        <span class="section-eyebrow">LIVE HOSPITAL DIRECTORY</span>
+        <h2 class="section-title">Active Clinical Departments</h2>
+        <p class="section-desc">Inspect real-time estimated wait times and monitor active triage queues.</p>
+      </div>
+      <a routerLink="/departments" class="btn btn-outline">View All Departments →</a>
+    </div>
+
+    <div class="departments-grid">
+      @for (dept of departments(); track dept.id) {
+        <div class="dept-box">
+          <div class="dept-box-header">
+            <div class="dept-avatar">🏥</div>
+            <div class="dept-meta">
+              <h4>{{ dept.name }}</h4>
+              <span class="dept-id-tag">ID #0{{ dept.id }}</span>
+            </div>
+          </div>
+          <div class="dept-box-stats">
+            <div class="stat-pill">
+              <span class="stat-icon">⏱️</span>
+              <span class="stat-text">Avg Wait: <strong>{{ dept.avgTime || 15 }}m</strong></span>
+            </div>
+            <div class="stat-pill pill-live">
+              <span class="live-dot"></span>
+              <span class="stat-text">Live Queue Active</span>
+            </div>
+          </div>
+          <a [routerLink]="['/queue', dept.id]" class="btn-dept-action">
+            <span>Inspect Live Queue</span>
+            <span>→</span>
+          </a>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Bottom CTA Banner (Apollo style) -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="cta-card">
+      <span class="cta-pill">DEPLOY SWASTHYAQUEUE</span>
+      <h2>Transform Hospital Queue Efficiency Today</h2>
+      <p>
+        Experience sub-millisecond priority triage, eliminate doctor idle time, and protect patient safety with automated clinical prerequisite enforcement.
+      </p>
+      <div class="cta-actions">
+        @if (isLoggedIn) {
+          <a routerLink="/dashboard" class="btn btn-lg btn-primary btn-glow">
+            <span>Open Staff Cockpit</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        } @else {
+          <a routerLink="/login" class="btn btn-lg btn-primary btn-glow">
+            <span>Staff & Admin Sign In</span>
+            <span class="btn-arrow">→</span>
+          </a>
+          <a routerLink="/departments" class="btn btn-lg btn-glass">
+            <span>Browse All Queues</span>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand">
+          <div class="brand-symbol">
+            <span class="symbol-icon">⚡</span>
+          </div>
+          <span class="brand-title">SwasthyaQueue</span>
+        </div>
+        <p class="footer-tagline">
+          Intelligent clinical priority triage, Redis in-memory queue scoring, and PostgreSQL state synchronization.
+        </p>
+        <div class="footer-status">
+          <span class="status-pulse-dot"></span>
+          <span>Engine Operational • Spring Security & Redis Active</span>
+        </div>
+      </div>
+
+      <div class="footer-links-group">
+        <div class="footer-col">
+          <h5>Core Platform</h5>
+          <a routerLink="/departments">Departments</a>
+          <a routerLink="/dashboard">Staff Dashboard</a>
+          <a routerLink="/login">Sign In</a>
+        </div>
+        <div class="footer-col">
+          <h5>Architecture</h5>
+          <a href="#features">Redis In-Memory</a>
+          <a href="#workflow">Prerequisite DAG</a>
+          <a href="#priority-engine">Aging Multiplier</a>
+        </div>
+        <div class="footer-col">
+          <h5>Stack</h5>
+          <span>Spring Boot 3.x</span>
+          <span>PostgreSQL + Sequence</span>
+          <span>Redis In-Memory Cache</span>
+          <span>Angular Zoneless</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 SwasthyaQueue Healthcare Systems. Developed with High-Performance Clinical Architecture.</p>
+    </div>
+  </footer>
+</div>

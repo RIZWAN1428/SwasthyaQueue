@@ -1,5 +1,5 @@
 .queue-page {
-  max-width: 960px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -7,14 +7,15 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
+  gap: 16px;
 
   h1 {
     margin: 0 0 4px;
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--color-text);
-    letter-spacing: -0.5px;
+    font-size: 28px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.03em;
   }
 
   .page-subtitle {
@@ -27,20 +28,20 @@
 .queue-count {
   font-size: 12px;
   font-weight: 700;
-  color: var(--color-text-muted);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  padding: 5px 12px;
-  border-radius: 20px;
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 6px 14px;
+  border-radius: 999px;
   white-space: nowrap;
 }
 
 .queue-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 table {
@@ -49,66 +50,67 @@ table {
 }
 
 thead tr {
-  background: var(--color-bg);
+  background: rgba(6, 9, 17, 0.8);
   border-bottom: 1px solid var(--color-border);
 }
 
 th {
   text-align: left;
-  padding: 12px var(--spacing-md);
+  padding: 14px var(--spacing-md);
   font-weight: 700;
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+  color: #94a3b8;
 }
 
 tbody tr {
   border-bottom: 1px solid var(--color-border);
-  transition: background 0.1s;
+  transition: background 0.15s ease;
 
   &:last-child {
     border-bottom: none;
   }
 
   &:hover {
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.03);
   }
 
   &.row-waiting {
-    background: #fffbeb;
+    background: rgba(245, 158, 11, 0.04);
 
     &:hover {
-      background: #fef9c3;
+      background: rgba(245, 158, 11, 0.08);
     }
   }
 
   &.row-done {
-    opacity: 0.65;
+    opacity: 0.5;
   }
 }
 
 td {
-  padding: 13px var(--spacing-md);
+  padding: 16px var(--spacing-md);
   font-size: 14px;
   vertical-align: middle;
 }
 
 .token-chip {
   display: inline-block;
-  background: #eff6ff;
-  color: var(--color-primary);
-  border: 1px solid #bfdbfe;
-  border-radius: 6px;
-  padding: 3px 10px;
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 8px;
+  padding: 4px 12px;
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
 }
 
 .patient-name {
-  font-weight: 600;
-  color: var(--color-text);
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .status-badge {
@@ -116,26 +118,27 @@ td {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 3px 10px;
-  border-radius: 20px;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 999px;
 
   &.status-waiting {
-    background: #fffbeb;
-    color: #92400e;
-    border: 1px solid #fde68a;
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
   }
 
   &.status-completed {
-    background: #f0fdf4;
-    color: #166534;
-    border: 1px solid #bbf7d0;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
   }
 }
 
 .wait-time {
-  color: var(--color-text-muted);
+  color: #cbd5e1;
   font-size: 13px;
+  font-weight: 500;
 }
 
 .alert-bell {
@@ -143,33 +146,33 @@ td {
 }
 
 .muted {
-  color: #c0c8d4;
+  color: #475569;
   font-size: 14px;
 }
 
 .btn-complete {
-  padding: 6px 14px;
-  background: var(--color-success);
+  padding: 7px 16px;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
   color: white;
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   font-family: var(--font-family);
-  letter-spacing: 0.3px;
-  transition: opacity 0.15s, transform 0.1s;
+  letter-spacing: 0.03em;
+  transition: all 0.15s ease;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
 
   &:hover {
-    opacity: 0.9;
+    box-shadow: 0 0 18px rgba(16, 185, 129, 0.5);
     transform: translateY(-1px);
   }
 }
 
 .empty-row {
   text-align: center;
-  padding: 48px !important;
+  padding: 64px !important;
   color: var(--color-text-muted);
   font-size: 14px;
-  gap: 8px;
 }

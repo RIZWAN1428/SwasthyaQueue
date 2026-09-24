@@ -1,83 +1,142 @@
 <div class="dashboard-page">
   <div class="page-header">
     <div>
-      <h1>Dashboard</h1>
-      <p class="page-subtitle">Live overview of the hospital queue system</p>
+      <div class="header-pretitle">CLINICAL OPERATIONAL TELEMETRY</div>
+      <h1>Live Operations Dashboard</h1>
+      <p class="page-subtitle">Real-time overview of triage queues, Redis scoring, and department throughput</p>
     </div>
-    <span class="live-badge">🟢 Live</span>
+    <div class="header-badges">
+      <span class="engine-badge">⚡ Redis Priority Engine Active</span>
+      <span class="live-badge">🟢 Real-Time</span>
+    </div>
   </div>
 
   @if (dashboard()) {
     <div class="stats-grid">
       <div class="stat-card stat-blue">
-        <div class="stat-icon">🏢</div>
+        <div class="stat-icon-wrap">🏢</div>
         <div class="stat-info">
           <span class="stat-number">{{ dashboard()!.totalDepartments }}</span>
-          <span class="stat-label">Total Departments</span>
+          <span class="stat-label">Active Departments</span>
+          <span class="stat-sub">Clinical routing units</span>
         </div>
       </div>
 
       <div class="stat-card stat-orange">
-        <div class="stat-icon">⏳</div>
+        <div class="stat-icon-wrap">⏳</div>
         <div class="stat-info">
           <span class="stat-number">{{ dashboard()!.totalPatientsWaiting }}</span>
-          <span class="stat-label">Patients Waiting</span>
+          <span class="stat-label">Patients in Queue</span>
+          <span class="stat-sub">Waiting for consultation</span>
         </div>
       </div>
 
       <div class="stat-card stat-red">
-        <div class="stat-icon">🔔</div>
+        <div class="stat-icon-wrap">🔔</div>
         <div class="stat-info">
           <span class="stat-number">{{ dashboard()!.departmentsWithAlerts.length }}</span>
-          <span class="stat-label">Departments with Alerts</span>
+          <span class="stat-label">High-Wait Alerts</span>
+          <span class="stat-sub">Capacity threshold alarms</span>
+        </div>
+      </div>
+
+      <div class="stat-card stat-cyan">
+        <div class="stat-icon-wrap">⚡</div>
+        <div class="stat-info">
+          <span class="stat-number">&lt; 1ms</span>
+          <span class="stat-label">Redis Scoring Latency</span>
+          <span class="stat-sub">In-memory dynamic calc</span>
         </div>
       </div>
     </div>
 
+    <!-- Active High-Wait Alerts Section -->
     @if (dashboard()!.departmentsWithAlerts.length > 0) {
-      <div class="section-card">
+      <div class="section-card alert-section">
         <div class="section-header">
-          <h2>⚠️ Active Alerts</h2>
-          <span class="section-badge alert-badge">{{ dashboard()!.departmentsWithAlerts.length }} alert(s)</span>
+          <div class="section-title-wrap">
+            <span class="pulse-warning"></span>
+            <h2>Active Department Alerts</h2>
+          </div>
+          <span class="section-badge alert-badge">{{ dashboard()!.departmentsWithAlerts.length }} Dept Overcrowded</span>
         </div>
         <ul class="alert-list">
           @for (name of dashboard()!.departmentsWithAlerts; track name) {
             <li class="alert-item">
               <span class="alert-dot"></span>
-              <span>{{ name }}</span>
-              <span class="alert-tag">High Wait</span>
+              <div class="alert-text">
+                <strong>{{ name }}</strong> exceeds standard waiting threshold
+              </div>
+              <span class="alert-tag">High Wait Alert</span>
             </li>
           }
         </ul>
       </div>
     }
 
+    <!-- Quick Clinical Actions Grid -->
     <div class="section-card">
       <div class="section-header">
-        <h2>📋 Quick Actions</h2>
+        <h2>⚡ Clinical Navigation & Quick Actions</h2>
       </div>
-      <div class="quick-actions">
-        <a routerLink="/departments" class="action-btn">
-          <span class="action-icon">🏢</span>
-          <span class="action-label">View Departments</span>
+      <div class="quick-actions-grid">
+        <a routerLink="/departments" class="action-card">
+          <div class="action-icon">🏢</div>
+          <div class="action-info">
+            <span class="action-title">Departments & Live Queues</span>
+            <span class="action-desc">Inspect real-time patient queues and complete tokens</span>
+          </div>
           <span class="action-arrow">→</span>
         </a>
-        <a routerLink="/register-patient" class="action-btn">
-          <span class="action-icon">👤</span>
-          <span class="action-label">Register Patient</span>
+
+        <a routerLink="/register-patient" class="action-card">
+          <div class="action-icon">👤</div>
+          <div class="action-info">
+            <span class="action-title">Patient Intake & Registration</span>
+            <span class="action-desc">Register new patients with duplicate phone check</span>
+          </div>
           <span class="action-arrow">→</span>
         </a>
-        <a routerLink="/admin" class="action-btn">
-          <span class="action-icon">⚙️</span>
-          <span class="action-label">Admin Panel</span>
+
+        <a routerLink="/admin" class="action-card">
+          <div class="action-icon">⚙️</div>
+          <div class="action-info">
+            <span class="action-title">Administration Cockpit</span>
+            <span class="action-desc">Configure departments, prerequisites DAG, and staff</span>
+          </div>
           <span class="action-arrow">→</span>
         </a>
+      </div>
+    </div>
+
+    <!-- System Architecture & Sync Monitor Card -->
+    <div class="section-card tech-monitor-card">
+      <div class="section-header">
+        <h2>⚙️ Clinical Engine Telemetry</h2>
+        <span class="sync-status-badge">🔄 Batch Syncer @Scheduled 30s</span>
+      </div>
+      <div class="telemetry-grid">
+        <div class="telemetry-box">
+          <span class="tele-label">Dynamic Priority Engine</span>
+          <span class="tele-val text-green">Redis In-Memory (Active)</span>
+          <span class="tele-hint">Equation: (Severity × 10) + (Aging × 0.3)</span>
+        </div>
+        <div class="telemetry-box">
+          <span class="tele-label">PostgreSQL Persistence</span>
+          <span class="tele-val text-blue">ACID Sequence (nextval)</span>
+          <span class="tele-hint">Zero-collision token dispatch</span>
+        </div>
+        <div class="telemetry-box">
+          <span class="tele-label">Department Dependency DAG</span>
+          <span class="tele-val text-purple">Prerequisite Enforced</span>
+          <span class="tele-hint">Pre-check prevents skipped diagnostics</span>
+        </div>
       </div>
     </div>
   } @else {
     <div class="loading-state">
       <div class="loading-spinner"></div>
-      <p>Loading dashboard data…</p>
+      <p>Synchronizing with SwasthyaQueue telemetry…</p>
     </div>
   }
 </div>

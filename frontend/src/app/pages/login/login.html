@@ -1,24 +1,32 @@
 <div class="login-page">
+  <div class="login-backdrop-glow"></div>
+  
   <div class="login-card">
+    <a routerLink="/" class="back-link">
+      <span>← Back to SwasthyaQueue Overview</span>
+    </a>
+
     <div class="login-header">
-      <div class="login-logo">🏥</div>
-      <h1>SwasthyaQueue</h1>
-      <p class="login-subtitle">Staff Portal — Sign in to continue</p>
+      <div class="login-logo-wrap">
+        <span class="login-logo">⚡</span>
+      </div>
+      <h1>Clinical Staff Login</h1>
+      <p class="login-subtitle">Authenticate via Spring Security & JWT Filter</p>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-field">
-        <label for="userName">Username</label>
-        <input id="userName" type="text" formControlName="userName" placeholder="Enter your username" />
+        <label for="userName">Staff Username</label>
+        <input id="userName" type="text" formControlName="userName" placeholder="Enter username (e.g. staff1 / admin)" />
       </div>
 
       <div class="form-field">
         <label for="password">Password</label>
-        <input id="password" type="password" formControlName="password" placeholder="Enter your password" />
+        <input id="password" type="password" formControlName="password" placeholder="Enter password" />
       </div>
 
       <button type="submit" [disabled]="loginForm.invalid" class="btn-primary">
-        Sign In
+        Sign In to Portal →
       </button>
     </form>
 
@@ -28,8 +36,8 @@
       </div>
     }
 
-    <!-- <p class="register-link">
-      Don't have an account? <a routerLink="/register">Register here</a>
-    </p> -->
+    <div class="login-footer-info">
+      <span>🛡️ Protected by Stateless JWT Bearer Filter</span>
+    </div>
   </div>
 </div>
