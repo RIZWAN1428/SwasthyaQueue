@@ -177,8 +177,11 @@
         <div #carouselRail class="carousel-rail">
           @for (card of carouselCards; track card.id) {
           <article class="carousel-card">
-            <!-- 16:9 Media Container with Overflow Hidden -->
+            <!-- 16:9 Media Container with Overflow Hidden & Image -->
             <div class="card-media-wrapper" [style.background]="card.imageBg">
+              @if (card.imageSrc) {
+                <img [src]="card.imageSrc" [alt]="card.title" class="card-image" loading="lazy" />
+              }
               <div class="media-overlay-content">
                 <span class="media-tag">{{ card.tag }}</span>
                 <div class="media-icon-symbol">⚡</div>
@@ -227,6 +230,9 @@
         <!-- Left Dominant Column (Span 2) -->
         <article class="editorial-lead-card">
           <div class="lead-media-container">
+            @if (editorialLead.imageSrc) {
+              <img [src]="editorialLead.imageSrc" [alt]="editorialLead.title" class="lead-image" loading="lazy" />
+            }
             <div class="lead-badge-float">
               <span class="sq-tag">{{ editorialLead.category }}</span>
             </div>
