@@ -1,43 +1,72 @@
-<div class="login-page">
-  <div class="login-backdrop-glow"></div>
-  
-  <div class="login-card">
+<div class="sq-login-page">
+  <div class="login-utility-bar">
     <a routerLink="/" class="back-link">
-      <span>← Back to SwasthyaQueue Overview</span>
+      <span class="back-arrow">←</span>
+      <span>Institutional Overview</span>
     </a>
 
-    <div class="login-header">
-      <div class="login-logo-wrap">
-        <span class="login-logo">⚡</span>
+    <button class="theme-toggle-btn" (click)="themeService.toggleTheme()">
+      @if (themeService.theme() === 'light') {
+        <span>🌙 Dark Mode</span>
+      } @else {
+        <span>☀️ Light Mode</span>
+      }
+    </button>
+  </div>
+
+  <div class="login-card-container">
+    <div class="sq-login-card">
+      <div class="login-card-header">
+        <div class="brand-monogram">SQ</div>
+        <span class="sq-tag">INSTITUTIONAL PORTAL</span>
+        <h1 class="login-title">Clinical Operations Authentication</h1>
+        <p class="login-subtitle">
+          Secure, authenticated access to SwasthyaQueue high-throughput priority triage consoles.
+        </p>
       </div>
-      <h1>Clinical Staff Login</h1>
-      <p class="login-subtitle">Authenticate via Spring Security & JWT Filter</p>
-    </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div class="form-field">
-        <label for="userName">Staff Username</label>
-        <input id="userName" type="text" formControlName="userName" placeholder="Enter username (e.g. staff1 / admin)" />
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <div class="form-field">
+          <label for="userName">Staff Username</label>
+          <input
+            id="userName"
+            type="text"
+            formControlName="userName"
+            placeholder="e.g. staff1 or admin"
+            autocomplete="username"
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Enter institutional credentials"
+            autocomplete="current-password"
+          />
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid" class="sq-btn-primary submit-btn">
+          <span>Authenticate & Access Dashboard</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+
+      @if (errorMessage) {
+        <div class="sq-error-banner">
+          <span class="error-icon">⚠️</span>
+          <span class="error-text">{{ errorMessage }}</span>
+        </div>
+      }
+
+      <div class="login-card-footer">
+        <div class="security-meta">
+          <span class="security-dot"></span>
+          <span>Cryptographically signed stateless JWT authorization filter active</span>
+        </div>
       </div>
-
-      <div class="form-field">
-        <label for="password">Password</label>
-        <input id="password" type="password" formControlName="password" placeholder="Enter password" />
-      </div>
-
-      <button type="submit" [disabled]="loginForm.invalid" class="btn-primary">
-        Sign In to Portal →
-      </button>
-    </form>
-
-    @if (errorMessage) {
-      <div class="error-banner">
-        <span>⚠️</span> {{ errorMessage }}
-      </div>
-    }
-
-    <div class="login-footer-info">
-      <span>🛡️ Protected by Stateless JWT Bearer Filter</span>
     </div>
   </div>
 </div>

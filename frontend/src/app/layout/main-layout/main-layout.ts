@@ -1,33 +1,39 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ThemeService } from '../../services/theme';
+
 interface JwtPayload {
   sub: string;
   role: string;
   iat: number;
   exp: number;
 }
+
 @Component({
   selector: 'app-main-layout',
-  //"frame" (header + nav links + logout button) that stays the same on every page, with a second, smaller <router-outlet>
-  //  inside that frame — that's where the actual page content (Departments, Queue, Admin) gets placed.
   imports: [RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
 })
-
 export class MainLayout {
-  
   isLoggedIn = !!localStorage.getItem('token');
-  payload: JwtPayload | null  = null;
-  constructor(private router: Router){
-    const token = localStorage.getItem('token');
+  payload: JwtPayload | null = null;
 
-    if(token){
-      this.payload = JSON.parse(atob(token.split('.')[1]));
+  constructor(
+    private router: Router,
+    public themeService: ThemeService
+  ) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        this.payload = JSON.parse(atob(token.split('.')[1]));
+      } catch {
+        this.payload = null;
+      }
     }
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }

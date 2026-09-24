@@ -1,51 +1,123 @@
+/* ==========================================================================
+   Light Blue & White Color System & Coupa Sans / Inter Typography
+   ========================================================================== */
+
 :root {
-  --color-primary: #3b82f6;
-  --color-primary-dark: #1d4ed8;
-  --color-primary-glow: rgba(59, 130, 246, 0.35);
-  --color-accent: #6366f1;
-  --color-cyan: #06b6d4;
+  /* Color Tokens - Light Blue & Pure White Canvas (Default) */
+  --color-canvas-base: #FFFFFF;
+  --color-canvas-alt: #F0F7FF;        /* Soft luminous light blue */
+  --color-canvas-subtle: #E0F2FE;     /* Clean sky light blue */
+  --color-canvas-spotlight: #0369A1;  /* Rich azure accent section */
+  
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F0F7FF;
+  
+  /* High-Contrast Typography */
+  --color-text-primary: #0F172A;      /* Deep Slate / Navy */
+  --color-text-secondary: #1E293B;
+  --color-text-muted: #475569;
+  --color-text-meta: #64748B;
+  --color-text-inverted: #FFFFFF;
 
-  --color-bg: #060911;
-  --color-bg-alt: #0a0f1d;
-  --color-surface: #0e1526;
-  --color-surface-elevated: #131c31;
-  --color-surface-hover: #18233c;
-  --color-border: #1e293b;
-  --color-border-subtle: rgba(255, 255, 255, 0.08);
-  --color-border-glow: rgba(59, 130, 246, 0.4);
+  /* Legacy variable aliases for app-wide compatibility */
+  --color-bg: var(--color-canvas-base);
+  --color-bg-alt: var(--color-canvas-alt);
+  --color-surface-elevated: var(--color-canvas-subtle);
+  --color-text: var(--color-text-primary);
+  --color-text-dim: var(--color-text-meta);
 
-  --color-text: #f8fafc;
-  --color-text-muted: #94a3b8;
-  --color-text-dim: #64748b;
+  /* Structural Borders (Delicate 1px Light Blue / Slate system) */
+  --color-border: #E0E7FF;
+  --color-border-delicate: rgba(2, 132, 199, 0.12);
+  --color-border-card: #E0F2FE;
+  --color-border-spotlight: #0284C7;
 
-  --color-danger: #ef4444;
-  --color-danger-glow: rgba(239, 68, 68, 0.2);
-  --color-success: #10b981;
-  --color-success-glow: rgba(16, 185, 129, 0.2);
-  --color-warning: #f59e0b;
-  --color-warning-glow: rgba(245, 158, 11, 0.2);
+  /* Brand Accents - Sky Blue / Cyan / Royal Light Blue */
+  --color-accent-amber: #0284C7;
+  --color-accent-gold: #0EA5E9;
+  --color-accent-gold-bg: #E0F2FE;
+  --color-accent-gold-border: #BAE6FD;
 
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
+  /* Interactive Primary - Vibrant Light Blue */
+  --color-primary: #0284C7;
+  --color-primary-hover: #0369A1;
+  --color-primary-text: #FFFFFF;
+  --color-primary-dark: #075985;
 
-  --radius-sm: 6px;
-  --radius: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  /* Functional status */
+  --color-danger: #EF4444;
+  --color-danger-bg: #FEF2F2;
+  --color-success: #10B981;
+  --color-success-bg: #ECFDF5;
 
-  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Plus Jakarta Sans', var(--font-family);
+  /* Geometry & Radii (Razor-sharp, clean aesthetic) */
+  --radius-sharp: 0px;
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius: 4px;
+  --radius-md: 6px;
+  --radius-card: 4px;
+  --radius-pill: 9999px;
 
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--color-border);
-  --shadow-glow: 0 0 25px -5px var(--color-primary-glow);
+  /* Typography - Coupa Sans / Inter & System Fallback Stack */
+  --font-family: 'Coupa Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-heading: 'Coupa Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Subtle elevations */
+  --shadow-subtle: 0 1px 3px rgba(2, 132, 199, 0.05);
+  --shadow-hover: 0 6px 20px rgba(2, 132, 199, 0.08);
 }
 
-* {
+/* ==========================================================================
+   Dark Canvas (Navy / Midnight Sky Blue)
+   ========================================================================== */
+[data-theme="dark"] {
+  --color-canvas-base: #0B132B;
+  --color-canvas-alt: #0F1D40;
+  --color-canvas-subtle: #1C2D5A;
+  --color-canvas-spotlight: #070D1E;
+
+  --color-surface: #0F1D40;
+  --color-surface-hover: #162854;
+
+  --color-text-primary: #F0F9FF;
+  --color-text-secondary: #E0F2FE;
+  --color-text-muted: #94A3B8;
+  --color-text-meta: #64748B;
+  --color-text-inverted: #0B132B;
+
+  --color-bg: var(--color-canvas-base);
+  --color-bg-alt: var(--color-canvas-alt);
+  --color-surface-elevated: var(--color-canvas-subtle);
+  --color-text: var(--color-text-primary);
+  --color-text-dim: var(--color-text-meta);
+
+  --color-border: #1E3A8A;
+  --color-border-delicate: rgba(56, 189, 248, 0.15);
+  --color-border-card: #1E3A8A;
+  --color-border-spotlight: #1E293B;
+
+  --color-accent-amber: #38BDF8;
+  --color-accent-gold: #38BDF8;
+  --color-accent-gold-bg: rgba(56, 189, 248, 0.15);
+  --color-accent-gold-border: rgba(56, 189, 248, 0.35);
+
+  --color-primary: #38BDF8;
+  --color-primary-hover: #7DD3FC;
+  --color-primary-text: #0B132B;
+  --color-primary-dark: #FFFFFF;
+
+  --color-danger: #FA7970;
+  --color-danger-bg: rgba(250, 121, 112, 0.12);
+  --color-success: #3FB950;
+  --color-success-bg: rgba(63, 185, 80, 0.12);
+
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* Base Reset & Core Styles */
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
@@ -55,41 +127,124 @@ html {
 
 body {
   margin: 0;
+  padding: 0;
+  background-color: var(--color-canvas-base);
+  color: var(--color-text-primary);
   font-family: var(--font-family);
-  background: var(--color-bg);
-  color: var(--color-text);
-  line-height: 1.5;
+  font-size: 15.5px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
+  color: var(--color-text-primary);
+  margin-top: 0;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
+/* Utility Classes */
+.sq-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
+.sq-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-amber);
+  background: var(--color-accent-gold-bg);
+  border: 1px solid var(--color-accent-gold-border);
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  line-height: 1;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+.sq-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--color-primary);
+  color: var(--color-primary-text);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 12px 24px;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+  }
 }
 
-/* Selection */
-::selection {
-  background: rgba(59, 130, 246, 0.3);
-  color: #ffffff;
+.sq-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: transparent;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 12px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-canvas-alt);
+    color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+}
+
+.sq-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: color 0.15s;
+
+  .sq-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    color: var(--color-primary-hover);
+
+    .sq-arrow {
+      transform: translateX(4px);
+    }
+  }
 }
