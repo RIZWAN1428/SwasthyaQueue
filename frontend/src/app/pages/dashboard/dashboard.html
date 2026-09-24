@@ -1,28 +1,83 @@
-<div class="dashboard-container">
-  <h2>Dashboard</h2>
+<div class="dashboard-page">
+  <div class="page-header">
+    <div>
+      <h1>Dashboard</h1>
+      <p class="page-subtitle">Live overview of the hospital queue system</p>
+    </div>
+    <span class="live-badge">🟢 Live</span>
+  </div>
 
   @if (dashboard()) {
     <div class="stats-grid">
-      <div class="stat-card">
-        <span class="stat-number">{{ dashboard()!.totalDepartments }}</span>
-        <span class="stat-label">Departments</span>
+      <div class="stat-card stat-blue">
+        <div class="stat-icon">🏢</div>
+        <div class="stat-info">
+          <span class="stat-number">{{ dashboard()!.totalDepartments }}</span>
+          <span class="stat-label">Total Departments</span>
+        </div>
       </div>
 
-      <div class="stat-card">
-        <span class="stat-number">{{ dashboard()!.totalPatientsWaiting }}</span>
-        <span class="stat-label">Patients Waiting</span>
+      <div class="stat-card stat-orange">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-info">
+          <span class="stat-number">{{ dashboard()!.totalPatientsWaiting }}</span>
+          <span class="stat-label">Patients Waiting</span>
+        </div>
+      </div>
+
+      <div class="stat-card stat-red">
+        <div class="stat-icon">🔔</div>
+        <div class="stat-info">
+          <span class="stat-number">{{ dashboard()!.departmentsWithAlerts.length }}</span>
+          <span class="stat-label">Departments with Alerts</span>
+        </div>
       </div>
     </div>
 
     @if (dashboard()!.departmentsWithAlerts.length > 0) {
-      <div class="alerts-section">
-        <h3>Departments with Alerts</h3>
-        <ul>
+      <div class="section-card">
+        <div class="section-header">
+          <h2>⚠️ Active Alerts</h2>
+          <span class="section-badge alert-badge">{{ dashboard()!.departmentsWithAlerts.length }} alert(s)</span>
+        </div>
+        <ul class="alert-list">
           @for (name of dashboard()!.departmentsWithAlerts; track name) {
-            <li>🔔 {{ name }}</li>
+            <li class="alert-item">
+              <span class="alert-dot"></span>
+              <span>{{ name }}</span>
+              <span class="alert-tag">High Wait</span>
+            </li>
           }
         </ul>
       </div>
     }
+
+    <div class="section-card">
+      <div class="section-header">
+        <h2>📋 Quick Actions</h2>
+      </div>
+      <div class="quick-actions">
+        <a routerLink="/departments" class="action-btn">
+          <span class="action-icon">🏢</span>
+          <span class="action-label">View Departments</span>
+          <span class="action-arrow">→</span>
+        </a>
+        <a routerLink="/register-patient" class="action-btn">
+          <span class="action-icon">👤</span>
+          <span class="action-label">Register Patient</span>
+          <span class="action-arrow">→</span>
+        </a>
+        <a routerLink="/admin" class="action-btn">
+          <span class="action-icon">⚙️</span>
+          <span class="action-label">Admin Panel</span>
+          <span class="action-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  } @else {
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Loading dashboard data…</p>
+    </div>
   }
 </div>

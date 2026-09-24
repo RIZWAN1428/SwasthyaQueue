@@ -1,21 +1,35 @@
-<div class="login-container">
-    <h2>Staff Login</h2>
-    <form [formGroup]="loginForm"  (ngSubmit)="onSubmit()">
-        <div class="form-field">
-            <label for="userName">Username</label>
-            <input id="userName" type="text" formControlName="userName" />
-        </div>
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">🏥</div>
+      <h1>SwasthyaQueue</h1>
+      <p class="login-subtitle">Staff Portal — Sign in to continue</p>
+    </div>
 
-        <div class="form-field">
-            <label for="password">Password</label>
-            <input id="password" type="password" formControlName="password" />
-        </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-field">
+        <label for="userName">Username</label>
+        <input id="userName" type="text" formControlName="userName" placeholder="Enter your username" />
+      </div>
 
-        <button type="submit">Login</button>
+      <div class="form-field">
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password" placeholder="Enter your password" />
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid" class="btn-primary">
+        Sign In
+      </button>
     </form>
-    <!-- this is relpace of ngif, now no need to import common modules-->
+
     @if (errorMessage) {
-        <p class="error">{{ errorMessage }}</p>
+      <div class="error-banner">
+        <span>⚠️</span> {{ errorMessage }}
+      </div>
     }
-    <p>Don't have an account? <a routerLink="/register">Register</a></p>
+
+    <!-- <p class="register-link">
+      Don't have an account? <a routerLink="/register">Register here</a>
+    </p> -->
+  </div>
 </div>

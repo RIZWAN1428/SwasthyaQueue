@@ -1,19 +1,34 @@
-<div class="departments-container">
-    <h2>Departments</h2>
-    <ul>
-        <!-- track dept.id tells Angular how to efficiently identify each item (using its unique id),
-          so Angular can update the list efficiently if data changes later, 
-          rather than re-rendering everything from scratch.-->
-        @for (dept of departments(); track dept.id){
-            <li>
-                <!--passing the department's actual id as a URL parameter (e.g., /queue/1).-->
-                 <a [routerLink]="['/queue', dept.id]">{{ dept.name }}</a>
-                 @if (dept.avgTime){
-                    <span> - avg {{ dept.avgTime }}</span>
-                 }   
-            </li>
-        }@empty {
-        <li>There are no items.</li>
-        }
-    </ul>
+<div class="departments-page">
+  <div class="page-header">
+    <div>
+      <h1>Departments</h1>
+      <p class="page-subtitle">Select a department to view its live queue</p>
+    </div>
+    <span class="dept-count">{{ departments().length }} departments</span>
+  </div>
+
+  <div class="dept-grid">
+    @for (dept of departments(); track dept.id) {
+      <a [routerLink]="['/queue', dept.id]" class="dept-card">
+        <div class="dept-card-icon">🏥</div>
+        <div class="dept-card-body">
+          <span class="dept-name">{{ dept.name }}</span>
+          @if (dept.avgTime) {
+            <span class="dept-avg">
+              <span class="avg-icon">⏱️</span> Avg. {{ dept.avgTime }} min
+            </span>
+          } @else {
+            <span class="dept-avg muted">No avg. time set</span>
+          }
+        </div>
+        <span class="dept-arrow">→</span>
+      </a>
+    } @empty {
+      <div class="empty-state">
+        <span class="empty-icon">🏢</span>
+        <p>No departments found.</p>
+        <small>Ask your admin to create departments.</small>
+      </div>
+    }
+  </div>
 </div>

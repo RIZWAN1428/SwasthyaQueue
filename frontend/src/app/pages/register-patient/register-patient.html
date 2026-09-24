@@ -1,26 +1,38 @@
-<div class="register-container">
-    <h2>Register Patient</h2>
+<div class="form-page">
+  <div class="form-card">
+    <div class="form-card-header">
+      <span class="card-icon">👤</span>
+      <div>
+        <h1>Register Patient</h1>
+        <p>Fill in the patient's details to register and generate a token</p>
+      </div>
+    </div>
 
-    <form [formGroup] = "patientForm" (ngSubmit)="onSubmit()">
-        <div class="form-field">
-            <label for="fullName">Full Name</label>
-            <input id="fullName" type = "text" formControlName="fullName"/>
-        </div>
+    <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+      <div class="form-field">
+        <label for="fullName">Full Name</label>
+        <input id="fullName" type="text" formControlName="fullName" placeholder="Patient's full name" />
+      </div>
 
-        <div class="form-field">
-            <label for="dateOfBirth">Date Of Birth</label>
-            <input id="dateOfBirth" type="date" formControlName="dateOfBirth" />
-        </div>
+      <div class="form-field">
+        <label for="dateOfBirth">Date of Birth</label>
+        <input id="dateOfBirth" type="date" formControlName="dateOfBirth" />
+      </div>
 
-        <div class="form-field">
-            <label for="phoneNumber">Phone Number</label>
-            <input id="phoneNumber" type="text" formControlName="phoneNumber"/>
-        </div>
+      <div class="form-field">
+        <label for="phoneNumber">Phone Number</label>
+        <input id="phoneNumber" type="text" formControlName="phoneNumber" placeholder="e.g. +91 98765 43210" />
+      </div>
 
-        <button type="submit">Register</button>
-
+      <button type="submit" class="btn-primary" [disabled]="patientForm.invalid">
+        Register Patient
+      </button>
     </form>
-    @if(errorMessage){
-        <p class="error">{{ errorMessage }}</p>
+
+    @if(errorMessage) {
+      <div class="error-banner">
+        <span>⚠️</span> {{ errorMessage }}
+      </div>
     }
+  </div>
 </div>

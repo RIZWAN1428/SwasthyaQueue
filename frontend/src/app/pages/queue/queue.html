@@ -1,40 +1,66 @@
-<div class="queue-container">
-    <h2>Live Queue</h2>
-<!--thead/tbody split header from data rows, tr = row, th = header cell, td = data cell-->
+<div class="queue-page">
+  <div class="page-header">
+    <div>
+      <h1>Live Queue</h1>
+      <p class="page-subtitle">Real-time token status for this department</p>
+    </div>
+    <span class="queue-count">{{ tokens().length }} token(s)</span>
+  </div>
+
+  <div class="queue-card">
     <table>
-        <thead>
-            <tr>
-                <th>Token</th>
-                <th>Patient</th>
-                <th>Status</th>
-                <th>Est. Wait</th>
-                <th>Alert</th>
-                @if(isLoggedIn){
-                     <th>Action</th>
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Patient</th>
+          <th>Status</th>
+          <th>Est. Wait</th>
+          <th>Alert</th>
+          @if(isLoggedIn) {
+            <th>Action</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for(token of tokens(); track token.id) {
+          <tr [class.row-waiting]="token.status === 'WAITING'" [class.row-done]="token.status === 'COMPLETED'">
+            <td><span class="token-chip">{{ token.tokenNumber }}</span></td>
+            <td class="patient-name">{{ token.patientName }}</td>
+            <td>
+              <span class="status-badge" [class.status-waiting]="token.status === 'WAITING'" [class.status-completed]="token.status === 'COMPLETED'">
+                {{ token.status }}
+              </span>
+            </td>
+            <td class="wait-time">
+              @if(token.estimatedWaitMinutes) {
+                <span>⏱️ {{ token.estimatedWaitMinutes }} min</span>
+              } @else {
+                <span class="muted">—</span>
+              }
+            </td>
+            <td>
+              @if(token.shouldAlert) {
+                <span class="alert-bell">🔔</span>
+              } @else {
+                <span class="muted">—</span>
+              }
+            </td>
+            @if(isLoggedIn) {
+              <td>
+                @if (token.status === 'WAITING') {
+                  <button class="btn-complete" (click)="completeToken(token.id)">✓ Complete</button>
                 }
-            </tr>
-        </thead>
-        <tbody>
-            @for(token of tokens(); track token.id){
-                <tr>
-                    <td>{{ token.tokenNumber }}</td>
-                    <td>{{ token.patientName }}</td>
-                    <td>{{ token.status }}</td>
-                    <td>{{ token.estimatedWaitMinutes }}</td>
-                    <td>
-                        @if(token.shouldAlert){
-                            <span>🔔</span>
-                        }
-                    </td>
-                    <td>
-                        <!--only show the button for tokens still waiting, not already completed.-->
-                        @if (isLoggedIn && token.status === 'WAITING'){
-                            <!--Angular's event binding syntax, calls the method when clicked.-->
-                            <button (click)="completeToken(token.id)">Complete</button>
-                        }
-                    </td>
-                </tr>
+              </td>
             }
-        </tbody>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="empty-row">
+              <span>📋</span> No tokens in queue for this department.
+            </td>
+          </tr>
+        }
+      </tbody>
     </table>
+  </div>
 </div>

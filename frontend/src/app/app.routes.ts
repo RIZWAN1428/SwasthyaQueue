@@ -9,6 +9,7 @@ import { MainLayout } from './layout/main-layout/main-layout';
 import { authGuard } from './guards/auth-guard';
 import { adminGuard } from './guards/admin-guard';
 import { Register } from './pages/register/register';
+import { Dashboard } from './pages/dashboard/dashboard';
 
 export const routes: Routes = [
     {path: 'login', component: Login},
@@ -17,12 +18,13 @@ export const routes: Routes = [
         path: '',
         component: MainLayout,
         children:[
-            {path: 'queue/:id', component: Queue},
+            {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+            {path: 'dashboard', component: Dashboard, canActivate: [authGuard]},
             {path: 'departments', component: Departments, canActivate: [authGuard]},
-            {path: 'queue/:id', component: Queue,  canActivate: [authGuard]},
-            {path: 'register-patient', component: RegisterPatient, canActivate: [authGuard]}, 
-            {path: 'create-token/:patientId', component: CreateToken,  canActivate: [authGuard]},
-            {path: 'admin', component:Admin,  canActivate: [adminGuard]},
+            {path: 'queue/:id', component: Queue, canActivate: [authGuard]},
+            {path: 'register-patient', component: RegisterPatient, canActivate: [authGuard]},
+            {path: 'create-token/:patientId', component: CreateToken, canActivate: [authGuard]},
+            {path: 'admin', component: Admin, canActivate: [adminGuard]},
         ],
     },
 ];

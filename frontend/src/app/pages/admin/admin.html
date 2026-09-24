@@ -1,90 +1,123 @@
-<div class="admin-container">
-    <h2>Create Department</h2>
+<div class="admin-page">
+  <div class="page-header">
+    <div>
+      <h1>⚙️ Admin Panel</h1>
+      <p class="page-subtitle">Manage departments, staff, and system configuration</p>
+    </div>
+  </div>
 
-    <form [formGroup] = "createDeptForm" (ngSubmit)="onCreateDepartment()">
-         <div class="form-field">
-            <label for="name">Name</label>
-            <input id="name" type = "text" formControlName="name"/>
+  <div class="admin-grid">
+    <!-- Create Department -->
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <span class="card-icon">🏢</span>
+        <div>
+          <h2>Create Department</h2>
+          <p>Add a new department to the system</p>
         </div>
-
-         <button type="submit">Register</button>
-    </form>
-    @if (createDeptMessage()) {
-    <p>{{ createDeptMessage() }}</p>
-    }
-
-    <h2>Set Average Time</h2>
-    <form [formGroup]="avgTimeForm" (ngSubmit)="onSetAvgTime()">
+      </div>
+      <form [formGroup]="createDeptForm" (ngSubmit)="onCreateDepartment()">
         <div class="form-field">
-            <label for="deptSelect">Department</label>
-            <select id="deptSelect" formControlName="departmentId">
-                <option value="">Select a department</option>
-                @for (dept of departments(); track dept.id){
-                    <option [value]="dept.id">{{ dept.name }}</option>
-                }
-            </select>
+          <label for="name">Department Name</label>
+          <input id="name" type="text" formControlName="name" placeholder="e.g. Cardiology" />
         </div>
-
-         <div class="form-field">
-            <label for="avgTime">Average Time (minutes)</label>
-            <input id="avgTime" type="number" formControlName="avgTime" />
+        <button type="submit" class="btn-primary">Create Department</button>
+      </form>
+      @if (createDeptMessage()) {
+        <div class="feedback-msg" [class.success]="!createDeptMessage()!.toLowerCase().includes('error')">
+          {{ createDeptMessage() }}
         </div>
-
-        <button type="submit">Update</button>
-
-    </form>
-    @if (avgTimeMessage()){
-        <p>{{ avgTimeMessage() }}</p>
-    }
-
-
-    <h2>Link Prerequisite</h2>
-    <form [formGroup]="addPrerequisiteForm" (ngSubmit)="onAddPrerequisite()">
-        <div class="form-field">
-            <label for="mainDept">Department</label>
-            <select id="mainDept" formControlName="departmentId">
-            <option value="">Select a department</option>
-            @for (dept of departments(); track dept.id) {
-                <option [value]="dept.id">{{ dept.name }}</option>
-            }
-            </select>
-        </div>
-
-        <div class="form-field">
-            <label for="prereqDept">Requires (prerequisite)</label>
-            <select id="prereqDept" formControlName="prerequisiteDepartmentId">
-            <option value="">Select a department</option>
-            @for (dept of departments(); track dept.id) {
-                <option [value]="dept.id">{{ dept.name }}</option>
-            }
-            </select>
-        </div>
-
-        <button type="submit">Link</button>
-    </form>
-
-    @if (prerequisiteMessage()){
-        <p> {{ prerequisiteMessage() }}</p>
-    }
-
-
-    <h2>Register Staff</h2>
-
-    <form [formGroup]="registerStaffForm" (ngSubmit)="onRegisterStaff()">
-    <div class="form-field">
-        <label for="staffUserName">Username</label>
-        <input id="staffUserName" type="text" formControlName="userName" />
+      }
     </div>
 
-    <div class="form-field">
-        <label for="staffPassword">Password</label>
-        <input id="staffPassword" type="password" formControlName="password" />
+    <!-- Set Average Time -->
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <span class="card-icon">⏱️</span>
+        <div>
+          <h2>Set Average Time</h2>
+          <p>Update estimated wait time per department</p>
+        </div>
+      </div>
+      <form [formGroup]="avgTimeForm" (ngSubmit)="onSetAvgTime()">
+        <div class="form-field">
+          <label for="deptSelect">Department</label>
+          <select id="deptSelect" formControlName="departmentId">
+            <option value="">Select a department</option>
+            @for (dept of departments(); track dept.id) {
+              <option [value]="dept.id">{{ dept.name }}</option>
+            }
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="avgTime">Average Time (minutes)</label>
+          <input id="avgTime" type="number" formControlName="avgTime" placeholder="e.g. 15" />
+        </div>
+        <button type="submit" class="btn-primary">Update Time</button>
+      </form>
+      @if (avgTimeMessage()) {
+        <div class="feedback-msg">{{ avgTimeMessage() }}</div>
+      }
     </div>
 
-    <button type="submit">Register</button>
-    </form>
+    <!-- Link Prerequisite -->
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <span class="card-icon">🔗</span>
+        <div>
+          <h2>Link Prerequisite</h2>
+          <p>Set department dependency order</p>
+        </div>
+      </div>
+      <form [formGroup]="addPrerequisiteForm" (ngSubmit)="onAddPrerequisite()">
+        <div class="form-field">
+          <label for="mainDept">Department</label>
+          <select id="mainDept" formControlName="departmentId">
+            <option value="">Select a department</option>
+            @for (dept of departments(); track dept.id) {
+              <option [value]="dept.id">{{ dept.name }}</option>
+            }
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="prereqDept">Requires (Prerequisite)</label>
+          <select id="prereqDept" formControlName="prerequisiteDepartmentId">
+            <option value="">Select a department</option>
+            @for (dept of departments(); track dept.id) {
+              <option [value]="dept.id">{{ dept.name }}</option>
+            }
+          </select>
+        </div>
+        <button type="submit" class="btn-primary">Link Departments</button>
+      </form>
+      @if (prerequisiteMessage()) {
+        <div class="feedback-msg">{{ prerequisiteMessage() }}</div>
+      }
+    </div>
 
-    @if (registerStaffMessage()) {
-    <p>{{ registerStaffMessage() }}</p>
-    }
+    <!-- Register Staff -->
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <span class="card-icon">👤</span>
+        <div>
+          <h2>Register Staff</h2>
+          <p>Create a new staff account</p>
+        </div>
+      </div>
+      <form [formGroup]="registerStaffForm" (ngSubmit)="onRegisterStaff()">
+        <div class="form-field">
+          <label for="staffUserName">Username</label>
+          <input id="staffUserName" type="text" formControlName="userName" placeholder="Staff username" />
+        </div>
+        <div class="form-field">
+          <label for="staffPassword">Password</label>
+          <input id="staffPassword" type="password" formControlName="password" placeholder="Set a password" />
+        </div>
+        <button type="submit" class="btn-primary">Register Staff</button>
+      </form>
+      @if (registerStaffMessage()) {
+        <div class="feedback-msg">{{ registerStaffMessage() }}</div>
+      }
+    </div>
+  </div>
 </div>

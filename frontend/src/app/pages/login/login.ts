@@ -32,7 +32,7 @@ export class Login {
       this.authService.login(userName, password).subscribe({
         next: (response) => {
           localStorage.setItem('token', response.token);
-          this.router.navigate(['/departments']);
+          this.router.navigate(['/dashboard']);
         },
         error: () => {
           this.errorMessage = 'Invalid userName or password';

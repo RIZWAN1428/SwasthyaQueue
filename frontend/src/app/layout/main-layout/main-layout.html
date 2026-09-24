@@ -1,16 +1,36 @@
-@if (isLoggedIn) {
 <header class="app-header">
-    <div class="nav-links">
-        <a routerLink="/departments">Departments</a>
-        @if(payload?.role === 'STAFF'){
-        <a routerLink="/register-patient">Register Patient</a>
-        }
-        <a routerLink="/admin">Admin</a>
-    </div>
+  <div class="header-brand">
+    <span class="brand-icon">🏥</span>
+    <span class="brand-name">SwasthyaQueue</span>
+  </div>
 
-    <button (click)="logout()">Logout</button>
+  @if (isLoggedIn) {
+    <nav class="nav-links">
+      <a routerLink="/dashboard" routerLinkActive="active">
+        <span class="nav-icon">📊</span> Dashboard
+      </a>
+      <a routerLink="/departments" routerLinkActive="active">
+        <span class="nav-icon">🏢</span> Departments
+      </a>
+      @if(payload?.role === 'STAFF'){
+        <a routerLink="/register-patient" routerLinkActive="active">
+          <span class="nav-icon">👤</span> Register Patient
+        </a>
+      }
+      @if(payload?.role === 'ADMIN'){
+        <a routerLink="/admin" routerLinkActive="active">
+          <span class="nav-icon">⚙️</span> Admin
+        </a>
+      }
+    </nav>
+
+    <div class="header-actions">
+      <span class="user-badge">{{ payload?.role }}</span>
+      <button class="btn-logout" (click)="logout()">Logout</button>
+    </div>
+  }
 </header>
-}
-    <main class="app-content">
-        <router-outlet></router-outlet>
-    </main>
+
+<main class="app-content">
+  <router-outlet></router-outlet>
+</main>

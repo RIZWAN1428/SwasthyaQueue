@@ -1,27 +1,36 @@
-<div class="create-token-container">
-    <h2>Check In Patient</h2>
+<div class="form-page">
+  <div class="form-card">
+    <div class="form-card-header">
+      <span class="card-icon">🎫</span>
+      <div>
+        <h1>Check In Patient</h1>
+        <p>Assign the patient to a department and set their severity</p>
+      </div>
+    </div>
 
     <form [formGroup]="tokenForm" (ngSubmit)="OnSubmit()">
-        <div class="form-field">
-            <label for="departmentId">Department</label>
-            <select id="departmentId" formControlName="departmentId">
-                <option value="">Select a department</option>
-                @for (dept of departments(); track dept.id){
-                    <!--[value]="dept.id" — binds the option's actual value to the department's id (a number), not just its displayed text-->
-                    <option [value]="dept.id">{{ dept.name }}</option>
-                }
-            </select>
-        </div>
+      <div class="form-field">
+        <label for="departmentId">Department</label>
+        <select id="departmentId" formControlName="departmentId">
+          <option value="">Select a department</option>
+          @for (dept of departments(); track dept.id) {
+            <option [value]="dept.id">{{ dept.name }}</option>
+          }
+        </select>
+      </div>
 
-        <div class="form-field">
-            <label for="severityScore">Severity (1-5)</label>
-            <input id="severityScore" type="number" min="1" max="5" formControlName="severityScore" />
-        </div>
+      <div class="form-field">
+        <label for="severityScore">Severity Score (1 = low, 5 = critical)</label>
+        <input id="severityScore" type="number" min="1" max="5" formControlName="severityScore" placeholder="1–5" />
+      </div>
 
-        <button type="submit">Check In</button>
+      <button type="submit" class="btn-primary">Issue Token & Check In</button>
     </form>
 
-    @if (errorMessage){
-        <p class="error">{{ errorMessage }}</p>
+    @if (errorMessage) {
+      <div class="error-banner">
+        <span>⚠️</span> {{ errorMessage }}
+      </div>
     }
+  </div>
 </div>
