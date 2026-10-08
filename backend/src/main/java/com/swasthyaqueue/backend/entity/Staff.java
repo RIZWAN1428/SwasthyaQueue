@@ -26,12 +26,16 @@ public class Staff {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 20)
     private Role role;
+
+    @Column(name = "hospital_id", nullable = false)
+    private Long hospitalId;
     //Hibernate (JPA) requires it. When Hibernate loads data from the database it needs to construct a blank Staff object first.
     public Staff(){}
 
-    public Staff(String userName, String passwordHash){
+    public Staff(String userName, String passwordHash, Long hospitalId){
         this.userName = userName;
         this.passwordHash = passwordHash;
+        this.hospitalId = hospitalId;
         this.role = Role.STAFF;
     }
 
@@ -55,5 +59,8 @@ public class Staff {
     }
     public void setRole(Role role){
         this.role = role; 
+    }
+    public Long getHospitalId() {
+    return hospitalId;
     }
 }

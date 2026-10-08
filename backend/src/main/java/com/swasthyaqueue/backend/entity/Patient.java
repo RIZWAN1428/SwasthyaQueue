@@ -37,6 +37,9 @@ public class Patient {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "hospital_id", nullable = false)
+    private Long hospitalId;
+
     //For patient to know about its tokens
     //Cascade:- if we do a operation on parent, the child will affect too. Like delete the patient will delete queue tokens too.
     //LAzy :- delays loading related database until your code actually assess it.
@@ -46,10 +49,11 @@ public class Patient {
     public Patient(){      
     }
     //Convenience constructor when code creates a patient
-    public Patient(String fullName, LocalDate dateOfBirth, String phoneNumber ){
+    public Patient(String fullName, LocalDate dateOfBirth, String phoneNumber, Long hospitalId ){
         this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
+        this.hospitalId = hospitalId;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -80,5 +84,8 @@ public class Patient {
     }
     public List<QueueToken> getQueueTokens(){
         return queueTokens;
+    }
+    public Long getHospitalId() {
+    return hospitalId;
     }
 }
