@@ -34,10 +34,14 @@ public class Department {
         return prerequisites;
     }
 
+    @Column(name = "hospital_id", nullable = false)
+    private Long hospitalId;
+
     public Department(){}
 
-    public Department(String name){
+    public Department(String name, Long hospitalId){
         this.name =name;
+        this.hospitalId = hospitalId;
     }
     public Long getId(){
         return id;
@@ -54,6 +58,10 @@ public class Department {
     }
     public void setAvgTime(Double avgTime){
         this.avgTime = avgTime;
+    }
+
+    public Long getHospitalId(){
+        return hospitalId;
     }
 
 }

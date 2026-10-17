@@ -56,12 +56,16 @@ public class QueueToken {
     @Column(name = "should_alert")
     private Boolean shouldAlert;
 
+    @Column(name = "hospital_id", nullable = false)
+    private Long hospitalId;
+
     public QueueToken(){}
 
-    public QueueToken(Patient patient, Department department, Integer severityScore, String tokenNumber){
+    public QueueToken(Patient patient, Department department, Integer severityScore, String tokenNumber, Long hospitalId){
         this.patient = patient;
         this.department = department;
         this.severityScore = severityScore;
+        this.hospitalId = hospitalId;
         this.tokenNumber = tokenNumber;
         this.arrivalTimestamp = LocalDateTime.now();
         this.status = TokenStatus.WAITING;
@@ -112,5 +116,9 @@ public class QueueToken {
     }
     public void setShouldAlert(Boolean shouldAlert){
         this.shouldAlert = shouldAlert;
+    }
+
+    public Long getHospitalId(){
+        return hospitalId;
     }
 }

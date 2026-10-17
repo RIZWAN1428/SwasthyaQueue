@@ -10,7 +10,7 @@ import com.swasthyaqueue.backend.entity.Department;
 import com.swasthyaqueue.backend.entity.DepartmentPrerequisite;
 
 import com.swasthyaqueue.backend.repository.DepartmentRepository;
-
+import com.swasthyaqueue.backend.security.CurrentUser;
 import com.swasthyaqueue.backend.repository.DepartmentPrerequisiteRepository;
 
 @Service 
@@ -24,12 +24,12 @@ public class DepartmentService {
 
     //Create a Department
     public Department createDepartment(String name){
-        Department department = new Department(name);
+        Department department = new Department(name, CurrentUser.getHospitalId());
         return departmentRepository.save(department);
     }
     //Get all department
     public List<Department> getAllDepartments(){
-        return departmentRepository.findAll();
+        return departmentRepository.findByHospitalId(CurrentUser.getHospitalId());
     }
 
     //Prerequisite Department 
@@ -76,5 +76,13 @@ public class DepartmentService {
         
     }
 
-
+    private Department getDepartmentInMyHospital(Long id){
+        Department department = departmentRepository.findById(id).orElseThrow(() ->
+            new IllegalArgumentException("No department found with id: " + id));
+        
+         if (!department.getHospitalId().equals(CurrentUser.getHospitalId())) {
+        throw new IllegalArgumentException("No department found with id: " + id);
+    }
+    return department;
+    }
 }

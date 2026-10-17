@@ -40,7 +40,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/staff/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/queue-tokens/department/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/departments").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/departments").hasAnyRole("STAFF", "ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/dashboard").hasAnyRole("STAFF", "ADMIN")
                 .requestMatchers("/api/departments/**").hasRole("ADMIN")
                 .requestMatchers("/api/staff/**").hasRole("ADMIN")
