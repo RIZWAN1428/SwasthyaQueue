@@ -14,10 +14,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 //Map Objects(class with fields) to Tables in database
 @Entity
-@Table(name = "patients")
+@Table(name = "patients", uniqueConstraints = @UniqueConstraint(columnNames = {"phone_number", "hospital_id"}))
 public class Patient {
 
     //primary key
@@ -32,7 +33,7 @@ public class Patient {
     private String fullName;
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
-    @Column(name = "phone_number", nullable = false, length = 15, unique = true)
+    @Column(name = "phone_number", nullable = false, length = 15)
     private String phoneNumber;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

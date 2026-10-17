@@ -97,3 +97,5 @@ now create a page for register so that staff can register by admin......also lin
 add hospital id injwtfilter, so that i can access hospital id with usernameand password.
 create a currentuser file in security, its kind of helper so that it can read from anywhere.by using this helper we don't need to write in every service.just calls CurrentUser.getHospitalId().
 update patient repo and patient service.
+remove uniqunessof phone from whole app to phonenumber in each app unique. with phone number and hospitalId unique together.
+
