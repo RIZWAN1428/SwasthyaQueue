@@ -34,10 +34,12 @@ public class JwtAuthFilter extends OncePerRequestFilter{
                 if(jwtUtil.validateToken(token)){
                 String userName = jwtUtil.getUserNameFromToken(token);
                 String role = jwtUtil.getRoleFromToken(token);
+                Long hospitalId = jwtUtil.getHospitalIdFromToken(token);
                 //pass username, no password, role.
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     userName, null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
                     //Stores authToken in Spring Security's context, so Spring now recognizes this request as authenticated.
+                    authToken.setDetails(hospitalId);
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }

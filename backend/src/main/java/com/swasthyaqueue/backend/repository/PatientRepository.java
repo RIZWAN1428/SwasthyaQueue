@@ -9,5 +9,5 @@ public interface PatientRepository extends JpaRepository<Patient, Long>{
 
     //existsBy - generate the query that check existence(return true/false)
     //phoneNumber - Tell spring which fields to check.
-    boolean existsByPhoneNumber(String phoneNumber);
+    boolean existsByPhoneNumberAndHospitalId(String phoneNumber, Long hospitalId);
 } 

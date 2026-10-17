@@ -43,7 +43,7 @@ public class StaffController {
     public Map<String, String> login(@RequestBody Map<String, String> request){
 
         Staff staff = staffService.loginStaff(request.get("userName"), request.get("password"));
-        String token = jwtUtil.generateToken(staff.getUserName(), staff.getRole().toString());
+        String token = jwtUtil.generateToken(staff.getUserName(), staff.getRole().toString(), staff.getHospitalId());
 
         Map<String, String> response = new HashMap<>();
         response.put("token", token);

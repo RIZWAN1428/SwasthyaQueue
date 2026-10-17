@@ -23,10 +23,11 @@
         }
         private final long expirationMillis = 3600000; //1 hour
         //Generate token
-        public String generateToken(String userName, String role){
+        public String generateToken(String userName, String role, Long hospitalId){
             return Jwts.builder()
                     .setSubject(userName)
                     .claim("role", role)
+                    .claim("hospitalId", hospitalId)
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
                     .signWith(getSigningKey())
@@ -53,5 +54,13 @@
         public String getRoleFromToken(String token){
             return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
                         .getBody().get("role", String.class);
+        }
+
+        //Get Hospitalid from token
+        public Long getHospitalIdFromToken(String token){
+            Number id = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
+                        .getBody().get("hospialId", Number.class);
+            
+            return id.longValue();
         }
     }

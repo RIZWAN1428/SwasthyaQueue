@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.swasthyaqueue.backend.entity.Patient;
 import com.swasthyaqueue.backend.repository.PatientRepository;
+import com.swasthyaqueue.backend.security.CurrentUser;
 
 @Service //tells this class contains business logic, manage it as a Bean.
 public class PatientService {
@@ -19,12 +20,13 @@ public class PatientService {
 
     //Register patient
     public Patient registerPatient(String fullName, LocalDate dateOfBirth, String phoneNumber){
-        boolean phoneExists = patientRepository.existsByPhoneNumber(phoneNumber);
+        
+        Long hospitalId = CurrentUser.getHospitalId();
 
-        if(phoneExists){
+        if(patientRepository.existsByPhoneNumberAndHospitalId(phoneNumber, hospitalId)){
             throw new IllegalArgumentException("A patient with this phone number is already registered.");
         }
-        Patient newPatient = new Patient(fullName, dateOfBirth, phoneNumber);
+        Patient newPatient = new Patient(fullName, dateOfBirth, phoneNumber, hospitalId);
         return patientRepository.save(newPatient);
     }
     //Get patient by id 
