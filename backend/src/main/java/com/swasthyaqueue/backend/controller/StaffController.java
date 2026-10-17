@@ -26,7 +26,7 @@ public class StaffController {
 
     @PostMapping
     public StaffResponse createStaff(@RequestBody Map<String, String> request){
-        Staff staff = staffService.regiserStaff(request.get("userName"), request.get("password"));
+        Staff staff = staffService.registerStaff(request.get("userName"), request.get("password"));
         return toResponse(staff);
     }
 

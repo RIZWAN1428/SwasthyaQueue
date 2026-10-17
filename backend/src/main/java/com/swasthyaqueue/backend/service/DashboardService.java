@@ -12,6 +12,7 @@ import com.swasthyaqueue.backend.entity.QueueToken;
 import com.swasthyaqueue.backend.entity.TokenStatus;
 import com.swasthyaqueue.backend.repository.DepartmentRepository;
 import com.swasthyaqueue.backend.repository.QueueTokenRepository;
+import com.swasthyaqueue.backend.security.CurrentUser;
 
 @Service 
 public class DashboardService {
@@ -26,7 +27,7 @@ public class DashboardService {
     private QueueTokenRepository queueTokenRepository;
 
     public DashboardResponse getDashboardSummary(){
-        List<Department> allDepartments = departmentRepository.findAll();
+        List<Department> allDepartments = departmentRepository.findByHospitalId(CurrentUser.getHospitalId());
         int totalDepartments = allDepartments.size();
 
         int totalPatientsWaiting = 0;

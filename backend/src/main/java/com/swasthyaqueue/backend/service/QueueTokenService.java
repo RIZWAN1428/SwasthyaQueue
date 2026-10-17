@@ -19,6 +19,7 @@ import com.swasthyaqueue.backend.repository.DepartmentPrerequisiteRepository;
 import com.swasthyaqueue.backend.repository.DepartmentRepository;
 import com.swasthyaqueue.backend.repository.PatientRepository;
 import com.swasthyaqueue.backend.repository.QueueTokenRepository;
+import com.swasthyaqueue.backend.security.CurrentUser;
 
 @Service 
 public class QueueTokenService {
@@ -40,26 +41,24 @@ public class QueueTokenService {
     private DepartmentPrerequisiteRepository departmentPrerequisiteRepository;
 
     //Create a Token
-    public QueueToken createToken(Long patientId, Long departmentId, Integer severityScore){
+    public QueueToken createToken(Long patientId, Long departmentId, Integer severityScore) {
 
-        Optional<Patient> patientResult = patientRepository.findById(patientId);
-        if(patientResult.isEmpty()){
-            throw new IllegalArgumentException("No patient found with id: " +patientId);
-        }
-        Optional<Department> departmentResult = departmentRepository.findById(departmentId);
-        if(departmentResult.isEmpty()){
-            throw new IllegalArgumentException("No department found with id: " +patientId);
-        }
+        Long hospitalId = CurrentUser.getHospitalId();
 
-        Patient patient = patientResult.get();
-        Department department = departmentResult.get();
-        //check if any prerequisites available before creating token.
+        Patient patient = patientRepository.findById(patientId)
+                .filter(p -> p.getHospitalId().equals(hospitalId))
+                .orElseThrow(() -> new IllegalArgumentException("No patient found with id: " + patientId));
+
+        Department department = departmentRepository.findById(departmentId)
+                .filter(d -> d.getHospitalId().equals(hospitalId))
+                .orElseThrow(() -> new IllegalArgumentException("No department found with id: " + departmentId));
+
         validatePrerequisitesCompleted(patient, department);
 
         String tokenNumber = generateTokenNumber(department);
 
-        QueueToken newToken = new QueueToken(patient, department, severityScore, tokenNumber);
-
+        QueueToken newToken = new QueueToken(patient, department, severityScore, tokenNumber, hospitalId);
+        
         return queueTokenRepository.save(newToken);
 
     }
@@ -183,6 +182,9 @@ public class QueueTokenService {
         }
 
         QueueToken token = tokenResult.get();
+        if (!token.getHospitalId().equals(CurrentUser.getHospitalId())) {
+            throw new IllegalArgumentException("No queue token found with id: " + tokenId);
+        }
         if(token.getStatus() == TokenStatus.COMPLETED || token.getStatus() == TokenStatus.SKIPPED){
             throw new IllegalArgumentException("Cannot complete a token that is already: " + token.getStatus());
         }

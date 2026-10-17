@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.swasthyaqueue.backend.repository.StaffRepository;
+import com.swasthyaqueue.backend.security.CurrentUser;
 import com.swasthyaqueue.backend.entity.Staff;
 
 @Service 
@@ -21,15 +22,15 @@ public class StaffService {
     private PasswordEncoder passwordEncoder;
 
     //Register Staff
-    public Staff regiserStaff(String userName, String password){
+    public Staff registerStaff(String userName, String password){
 
-        boolean userNameExists = staffRepository.existsByUserName(userName);
-        if(userNameExists){
-            throw new IllegalArgumentException("A staff with this user name is already exist.");
-        }
+        if (staffRepository.existsByUserName(userName)) {
+        throw new IllegalArgumentException("A staff with this user name is already exist.");
+    }
+
         //Hash the password before saving in repository.
         String hashedPassword = passwordEncoder.encode(password);
-        Staff newStaff = new Staff(userName, hashedPassword);
+        Staff newStaff = new Staff(userName, hashedPassword, CurrentUser.getHospitalId());
         return staffRepository.save(newStaff);
 
     }

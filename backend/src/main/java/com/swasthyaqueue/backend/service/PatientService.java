@@ -33,16 +33,15 @@ public class PatientService {
     public Patient getPatientById(Long id){
         //Optional - might have a patient side or empty, can handle both cases.
         //findById - we get this from JpaRepository
-        Optional<Patient> result = patientRepository.findById(id);
+        Long hospitalId = CurrentUser.getHospitalId();
 
-        if(result.isEmpty()){
-            throw new IllegalArgumentException("No patient found with id: " +id);
-        }
+        return patientRepository.findById(id)
+            .filter(p -> p.getHospitalId().equals(hospitalId))
+            .orElseThrow(() -> new IllegalArgumentException("No patient found with id: " + id));
 
-        return result.get();
     }
     //Get All patient
     public List<Patient> getAllPatient(){
-        return patientRepository.findAll();        
+        return patientRepository.findByHospitalId(CurrentUser.getHospitalId());       
     }
 }

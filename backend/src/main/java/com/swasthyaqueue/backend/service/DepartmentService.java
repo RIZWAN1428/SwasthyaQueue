@@ -35,42 +35,29 @@ public class DepartmentService {
     //Prerequisite Department 
     public DepartmentPrerequisite addPrerequisite(Long departmentId, Long prerequisiteDepartmentId){
 
-        Optional<Department> departmentResult = departmentRepository.findById(departmentId);
-        if(departmentResult.isEmpty()){
-            throw new IllegalArgumentException("No department found with id: " +departmentId);
-        }
-
-        Optional<Department> prerequisiteResult = departmentRepository.findById(prerequisiteDepartmentId);
-        if(prerequisiteResult.isEmpty()){
-            throw new IllegalArgumentException("No department found with id: " +prerequisiteDepartmentId);
-        }
+        Department department = getDepartmentInMyHospital(departmentId);
+        Department prerequisiteDepartment = getDepartmentInMyHospital(prerequisiteDepartmentId);
 
         if(departmentId.equals(prerequisiteDepartmentId)){
             throw new IllegalArgumentException("department can't be same with prerequisite department.");
         }
 
-        boolean alreadyLinked = departmentPrerequisiteRepository.existsByDepartmentAndPrerequisiteDepartment(departmentResult.get(),prerequisiteResult.get());
+        boolean alreadyLinked = departmentPrerequisiteRepository.existsByDepartmentAndPrerequisiteDepartment(department,prerequisiteDepartment);
         if(alreadyLinked){
             throw new IllegalArgumentException("This Prerequisite is already linked.");
         }
         
         DepartmentPrerequisite prerequisite = new  DepartmentPrerequisite();
-        prerequisite.setDepartment(departmentResult.get());
-        prerequisite.setPrerequisiteDepartment(prerequisiteResult.get());
+        prerequisite.setDepartment(department);
+        prerequisite.setPrerequisiteDepartment(prerequisiteDepartment);
 
         return departmentPrerequisiteRepository.save(prerequisite);
 
     }
 
      //Update avgTime , like how much patient generally have to wait per department
-    public Department updateAvgTime(Long id, Double avgTime){
-
-        Optional<Department> avgTimeResult = departmentRepository.findById(id);
-        if(avgTimeResult.isEmpty()){
-            throw new IllegalArgumentException("No department found with this ID: " + id);
-        }
-       
-        Department department = avgTimeResult.get();
+    public Department updateAvgTime(Long id, Double avgTime){      
+        Department department = getDepartmentInMyHospital(id);
         department.setAvgTime(avgTime);
         return departmentRepository.save(department);
         
