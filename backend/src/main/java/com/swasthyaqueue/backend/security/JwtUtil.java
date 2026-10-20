@@ -1,5 +1,6 @@
     package com.swasthyaqueue.backend.security;
 
+    import io.jsonwebtoken.Claims;
     import io.jsonwebtoken.Jwts;
 
     import io.jsonwebtoken.security.Keys;
@@ -37,8 +38,9 @@
         //Validate Token
         public boolean validateToken(String token){
             try{
-                Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
-                return true;
+                Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build()
+                .parseClaimsJws(token).getBody();
+                return claims.get("hospitalId") != null;
             }catch(Exception e){
                 return false;
             }
@@ -59,7 +61,7 @@
         //Get Hospitalid from token
         public Long getHospitalIdFromToken(String token){
             Number id = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
-                        .getBody().get("hospialId", Number.class);
+                        .getBody().get("hospitalId", Number.class);
             
             return id.longValue();
         }

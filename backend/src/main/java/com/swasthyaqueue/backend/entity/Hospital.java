@@ -3,7 +3,7 @@ package com.swasthyaqueue.backend.entity;
 import jakarta.persistence.*;
 
 @Entity 
-@Table(name = "hosptials")
+@Table(name = "hospitals")
 public class Hospital {
     
 
