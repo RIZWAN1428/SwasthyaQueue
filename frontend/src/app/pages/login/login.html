@@ -1,33 +1,17 @@
 <div class="sq-login-page">
-  <div class="login-utility-bar">
-    <a routerLink="/" class="back-link">
-      <span class="back-arrow">←</span>
-      <span>Institutional Overview</span>
-    </a>
-
-    <button class="theme-toggle-btn" (click)="themeService.toggleTheme()">
-      @if (themeService.theme() === 'light') {
-        <span>🌙 Dark Mode</span>
-      } @else {
-        <span>☀️ Light Mode</span>
-      }
-    </button>
-  </div>
-
   <div class="login-card-container">
     <div class="sq-login-card">
       <div class="login-card-header">
         <div class="brand-monogram">SQ</div>
-        <span class="sq-tag">INSTITUTIONAL PORTAL</span>
-        <h1 class="login-title">Clinical Operations Authentication</h1>
+        <h1 class="login-title">Sign In</h1>
         <p class="login-subtitle">
-          Secure, authenticated access to SwasthyaQueue high-throughput priority triage consoles.
+          Enter your username and password to access the hospital queue system.
         </p>
       </div>
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
         <div class="form-field">
-          <label for="userName">Staff Username</label>
+          <label for="userName">Username</label>
           <input
             id="userName"
             type="text"
@@ -39,33 +23,56 @@
 
         <div class="form-field">
           <label for="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            formControlName="password"
-            placeholder="Enter institutional credentials"
-            autocomplete="current-password"
-          />
+          <div class="password-wrapper">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
+            <button
+              type="button"
+              class="eye-toggle-btn"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+            >
+              @if (showPassword) {
+                <!-- Eye Off Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              } @else {
+                <!-- Eye On Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              }
+            </button>
+          </div>
         </div>
 
         <button type="submit" [disabled]="loginForm.invalid" class="sq-btn-primary submit-btn">
-          <span>Authenticate & Access Dashboard</span>
+          <span>Sign In</span>
           <span class="btn-arrow">→</span>
         </button>
       </form>
 
       @if (errorMessage) {
         <div class="sq-error-banner">
-          <span class="error-icon">⚠️</span>
+          <svg class="error-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
           <span class="error-text">{{ errorMessage }}</span>
         </div>
       }
 
       <div class="login-card-footer">
-        <div class="security-meta">
-          <span class="security-dot"></span>
-          <span>Cryptographically signed stateless JWT authorization filter active</span>
-        </div>
+        <span>SwasthyaQueue &bull; Hospital Patient Queue System</span>
       </div>
     </div>
   </div>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { ThemeService } from '../../services/theme';
 
 interface JwtPayload {
   sub: string;
@@ -19,10 +18,7 @@ export class MainLayout {
   isLoggedIn = !!localStorage.getItem('token');
   payload: JwtPayload | null = null;
 
-  constructor(
-    private router: Router,
-    public themeService: ThemeService
-  ) {
+  constructor(private router: Router) {
     const token = localStorage.getItem('token');
     if (token) {
       try {
@@ -33,7 +29,7 @@ export class MainLayout {
     }
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { Auth } from '../../services/auth';
-import { ThemeService } from '../../services/theme';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -17,14 +16,18 @@ export class Login {
   });
 
   errorMessage = '';
+  showPassword = false;
 
   constructor(
     private authService: Auth,
-    private router: Router,
-    public themeService: ThemeService
+    private router: Router
   ) {}
 
-  onSubmit() {
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  onSubmit(): void {
     const userName = this.loginForm.value.userName!;
     const password = this.loginForm.value.password!;
 
@@ -34,7 +37,7 @@ export class Login {
         this.router.navigate(['/dashboard']);
       },
       error: () => {
-        this.errorMessage = 'Invalid username or credentials. Please verify your institutional access.';
+        this.errorMessage = 'Invalid username or password. Please try again.';
       },
     });
   }

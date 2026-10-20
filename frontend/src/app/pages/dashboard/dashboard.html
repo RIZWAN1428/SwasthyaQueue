@@ -1,59 +1,41 @@
 <div class="sq-dashboard">
   <div class="dashboard-header">
     <div class="header-titles">
-      <span class="sq-tag">OPERATIONAL TELEMETRY</span>
-      <h1 class="page-title">Clinical Operations Dashboard</h1>
-      <p class="page-subtitle">Real-time throughput metrics, in-memory priority evaluation, and capacity alerts.</p>
-    </div>
-
-    <div class="header-status-group">
-      <div class="engine-status-pill">
-        <span class="pulse-indicator"></span>
-        <span>Redis In-Memory Engine Active</span>
-      </div>
-      <span class="timestamp-tag">30s Batch Syncer</span>
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-subtitle">Hospital overview, patient queues, and quick actions.</p>
     </div>
   </div>
 
   @if (dashboard()) {
-    <!-- Modular 4-Box Key Metrics Grid -->
+    <!-- 3 Key Metric Cards -->
     <div class="dashboard-metrics-grid">
       <div class="metric-card">
         <div class="card-top">
-          <span class="metric-title">Active Clinical Departments</span>
-          <span class="category-indicator">ROUTING</span>
+          <span class="metric-title">Departments</span>
+          <span class="category-indicator">ACTIVE</span>
         </div>
         <div class="metric-value">{{ dashboard()!.totalDepartments }}</div>
-        <div class="metric-footnote">Configured department routing nodes</div>
+        <div class="metric-footnote">Registered departments</div>
       </div>
 
       <div class="metric-card">
         <div class="card-top">
-          <span class="metric-title">Total Patients in Queue</span>
-          <span class="category-indicator">QUEUED</span>
+          <span class="metric-title">Patients Waiting</span>
+          <span class="category-indicator">IN QUEUE</span>
         </div>
         <div class="metric-value">{{ dashboard()!.totalPatientsWaiting }}</div>
-        <div class="metric-footnote">Awaiting consultation or triage</div>
+        <div class="metric-footnote">Waiting for consultation</div>
       </div>
 
       <div class="metric-card" [class.has-alerts]="dashboard()!.departmentsWithAlerts.length > 0">
         <div class="card-top">
-          <span class="metric-title">Capacity Threshold Alerts</span>
+          <span class="metric-title">Wait Time Alerts</span>
           <span class="category-indicator" [class.alert-ind]="dashboard()!.departmentsWithAlerts.length > 0">
-            {{ dashboard()!.departmentsWithAlerts.length > 0 ? 'CRITICAL' : 'NOMINAL' }}
+            {{ dashboard()!.departmentsWithAlerts.length > 0 ? 'ATTENTION' : 'NORMAL' }}
           </span>
         </div>
         <div class="metric-value">{{ dashboard()!.departmentsWithAlerts.length }}</div>
-        <div class="metric-footnote">Departments exceeding standard wait</div>
-      </div>
-
-      <div class="metric-card">
-        <div class="card-top">
-          <span class="metric-title">Scoring Evaluation Latency</span>
-          <span class="category-indicator">REDIS</span>
-        </div>
-        <div class="metric-value">&lt; 1.2ms</div>
-        <div class="metric-footnote">Deterministic in-memory evaluation</div>
+        <div class="metric-footnote">Departments with long wait times</div>
       </div>
     </div>
 
@@ -62,17 +44,20 @@
       <div class="dashboard-panel alert-panel">
         <div class="panel-header">
           <div class="header-left">
-            <span class="warning-square"></span>
-            <h3>Capacity Warning: Department Queue Overcrowding</h3>
+            <svg class="warning-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <h3>Departments with Long Wait Times</h3>
           </div>
-          <span class="alert-count-pill">{{ dashboard()!.departmentsWithAlerts.length }} Action Required</span>
+          <span class="alert-count-pill">{{ dashboard()!.departmentsWithAlerts.length }} Depts</span>
         </div>
         <div class="alerts-list">
           @for (name of dashboard()!.departmentsWithAlerts; track name) {
             <div class="alert-row">
-              <span class="row-indicator"></span>
               <span class="dept-name"><strong>{{ name }}</strong></span>
-              <span class="alert-desc">Exceeds standard 30-minute consultation threshold</span>
+              <span class="alert-desc">High wait time recorded</span>
               <a routerLink="/departments" class="sq-link">
                 <span>View Queue</span>
                 <span class="sq-arrow">→</span>
@@ -83,102 +68,72 @@
       </div>
     }
 
-    <!-- Quick Navigation & Operational Controls Grid -->
+    <!-- Quick Actions Hub with Icons -->
     <div class="dashboard-panel">
       <div class="panel-header">
-        <h3>Institutional Action Modules</h3>
+        <h3>Quick Actions</h3>
       </div>
       <div class="action-modules-grid">
         <a routerLink="/departments" class="module-card">
-          <div class="module-header">
-            <span class="module-num">01</span>
-            <span class="module-tag">DIRECTORY</span>
+          <div class="module-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
           </div>
-          <h4 class="module-title">Department Live Queues</h4>
-          <p class="module-desc">Inspect real-time patient queues, dynamic priority scores, and complete tokens.</p>
-          <div class="module-link">
-            <span>Manage Queues</span>
-            <span class="sq-arrow">→</span>
+          <div class="module-content">
+            <h4 class="module-title">Departments & Queues</h4>
+            <p class="module-desc">View live patient queues, priority order, and call next patients.</p>
+            <div class="module-link">
+              <span>Open Queues</span>
+              <span class="sq-arrow">→</span>
+            </div>
           </div>
         </a>
 
         <a routerLink="/register-patient" class="module-card">
-          <div class="module-header">
-            <span class="module-num">02</span>
-            <span class="module-tag">INTAKE</span>
+          <div class="module-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7.5" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
           </div>
-          <h4 class="module-title">Patient Registration</h4>
-          <p class="module-desc">Register new patients with duplicate phone verification and demographic capture.</p>
-          <div class="module-link">
-            <span>Intake Terminal</span>
-            <span class="sq-arrow">→</span>
+          <div class="module-content">
+            <h4 class="module-title">Register Patient</h4>
+            <p class="module-desc">Register a new patient and issue department queue tokens.</p>
+            <div class="module-link">
+              <span>New Patient</span>
+              <span class="sq-arrow">→</span>
+            </div>
           </div>
         </a>
 
         <a routerLink="/admin" class="module-card">
-          <div class="module-header">
-            <span class="module-num">03</span>
-            <span class="module-tag">GOVERNANCE</span>
+          <div class="module-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
           </div>
-          <h4 class="module-title">System Administration</h4>
-          <p class="module-desc">Manage department topologies, prerequisite DAGs, and staff authorization.</p>
-          <div class="module-link">
-            <span>Administration</span>
-            <span class="sq-arrow">→</span>
+          <div class="module-content">
+            <h4 class="module-title">Admin Settings</h4>
+            <p class="module-desc">Manage departments, rules, prerequisites, and system configuration.</p>
+            <div class="module-link">
+              <span>Manage System</span>
+              <span class="sq-arrow">→</span>
+            </div>
           </div>
         </a>
       </div>
     </div>
-
-    <!-- Infrastructure Telemetry Briefing -->
-    <div class="dashboard-panel">
-      <div class="panel-header">
-        <h3>Dual-Tier Engine Telemetry</h3>
-        <span class="tele-status">PostgreSQL Sync: Periodic 30s Active</span>
-      </div>
-      <div class="telemetry-table-wrapper">
-        <table class="telemetry-table">
-          <thead>
-            <tr>
-              <th>Architecture Subsystem</th>
-              <th>Operational Protocol</th>
-              <th>Latency / SLA</th>
-              <th>Integrity Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Dynamic Priority Calculator</strong></td>
-              <td>In-Memory Redis Key-Value Serialization</td>
-              <td>&lt; 1.2ms Read/Write</td>
-              <td><span class="status-verified">✓ Verified Active</span></td>
-            </tr>
-            <tr>
-              <td><strong>Relational Source of Truth</strong></td>
-              <td>PostgreSQL Sequences (nextval)</td>
-              <td>ACID Guaranteed</td>
-              <td><span class="status-verified">✓ Zero Collision</span></td>
-            </tr>
-            <tr>
-              <td><strong>Prerequisite DAG Engine</strong></td>
-              <td>Diagnostic Dependency Verification</td>
-              <td>Pre-Token Guard</td>
-              <td><span class="status-verified">✓ Enforced</span></td>
-            </tr>
-            <tr>
-              <td><strong>Periodic State Syncer</strong></td>
-              <td>Spring Boot @Scheduled Batching</td>
-              <td>30000ms Cadence</td>
-              <td><span class="status-verified">✓ Synchronized</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
   } @else {
     <div class="dashboard-loading-state">
-      <div class="loading-bar"></div>
-      <p>Synchronizing operational telemetry with SwasthyaQueue node…</p>
+      <div class="spinner"></div>
+      <p>Loading dashboard...</p>
     </div>
   }
 </div>

@@ -87,7 +87,7 @@ export class Admin implements OnInit {
 
       this.departmentService.addPrerequisite(departmentId, prerequisiteDepartmentId).subscribe({
         next: () => {
-          this.prerequisiteMessage.set('Department Link with prerequisite.');
+          this.prerequisiteMessage.set('Department prerequisite linked successfully.');
           this.addPrerequisiteForm.reset();
           this.loadDepartments();
         },

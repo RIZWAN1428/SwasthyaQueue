@@ -1,10 +1,10 @@
 <header class="app-header">
   <div class="header-brand-wrap">
-    <a routerLink="/" class="header-brand" title="View Institutional Overview">
+    <a routerLink="/dashboard" class="header-brand" title="SwasthyaQueue Dashboard">
       <div class="brand-monogram">SQ</div>
       <div class="brand-text">
-        <span class="brand-name">SWASTHYAQUEUE</span>
-        <span class="brand-sub">OPERATIONAL PORTAL</span>
+        <span class="brand-name">SwasthyaQueue</span>
+        <span class="brand-sub">HOSPITAL QUEUE SYSTEM</span>
       </div>
     </a>
   </div>
@@ -12,38 +12,24 @@
   @if (isLoggedIn) {
     <nav class="nav-links">
       <a routerLink="/dashboard" routerLinkActive="active">
-        <span>Operations Dashboard</span>
+        <span>Dashboard</span>
       </a>
       <a routerLink="/departments" routerLinkActive="active">
-        <span>Departments & Queues</span>
+        <span>Departments</span>
       </a>
       @if (payload?.role === 'STAFF') {
         <a routerLink="/register-patient" routerLinkActive="active">
-          <span>Patient Intake</span>
+          <span>Register Patient</span>
         </a>
       }
       @if (payload?.role === 'ADMIN') {
         <a routerLink="/admin" routerLinkActive="active">
-          <span>Administration</span>
+          <span>Admin</span>
         </a>
       }
     </nav>
 
     <div class="header-actions">
-      <!-- Dark/Light Mode Toggle -->
-      <button class="theme-toggle-btn" (click)="themeService.toggleTheme()" [title]="'Switch to ' + (themeService.theme() === 'light' ? 'Dark' : 'Light') + ' Mode'">
-        @if (themeService.theme() === 'light') {
-          <span>🌙 Dark</span>
-        } @else {
-          <span>☀️ Light</span>
-        }
-      </button>
-
-      <a routerLink="/" class="btn-public-view">
-        <span>Institutional Site</span>
-        <span class="arrow">→</span>
-      </a>
-
       <div class="user-pill">
         <span class="user-role-dot"></span>
         <span class="user-badge">{{ payload?.role || 'STAFF' }}</span>
