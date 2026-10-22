@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 
 @Entity 
 @Table(name = "queue_tokens")
@@ -58,6 +59,9 @@ public class QueueToken {
 
     @Column(name = "hospital_id", nullable = false)
     private Long hospitalId;
+    //Implement  optimist  locking to solve a race condition
+    @Version
+    private Long version;
 
     public QueueToken(){}
 

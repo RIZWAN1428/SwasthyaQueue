@@ -98,4 +98,7 @@ add hospital id injwtfilter, so that i can access hospital id with usernameand p
 create a currentuser file in security, its kind of helper so that it can read from anywhere.by using this helper we don't need to write in every service.just calls CurrentUser.getHospitalId().
 update patient repo and patient service.
 remove uniqunessof phone from whole app to phonenumber in each app unique. with phone number and hospitalId unique together.
-
+Now we will implement multi-threading, Staff A thread: reads token (status WAITING) Staff B thread: reads token (status WAITING)   <- A hasn't saved yet Staff A thread: check passes, sets COMPLETED, saves
+Staff B thread: check passes (it still holds the old WAITING copy), sets COMPLETED, saves.
+now we will implement optimist locking to resolve this error by implementing version numbering.
+update a version and set 0 from null. Now add a friendly 
