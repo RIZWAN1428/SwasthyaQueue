@@ -102,3 +102,4 @@ Now we will implement multi-threading, Staff A thread: reads token (status WAITI
 Staff B thread: check passes (it still holds the old WAITING copy), sets COMPLETED, saves.
 now we will implement optimist locking to resolve this error by implementing version numbering.
 update a version and set 0 from null. Now add a friendly 
+Cool down, then up again
