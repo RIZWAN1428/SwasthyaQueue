@@ -3,6 +3,7 @@ package com.swasthyaqueue.backend.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -19,4 +20,10 @@ public class GlobalExceptionHandler {
         public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", ex.getMessage()));
         }
+
+    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    public ResponseEntity<Map<String, String>> handleOptimisticLock(ObjectOptimisticLockingFailureException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                              .body(Map.of("error", "This token was just updated by someone else. Please refresh and try again."));
+    }
 }
