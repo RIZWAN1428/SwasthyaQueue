@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.swasthyaqueue.backend.entity.Patient;
@@ -27,7 +28,11 @@ public class PatientService {
             throw new IllegalArgumentException("A patient with this phone number is already registered.");
         }
         Patient newPatient = new Patient(fullName, dateOfBirth, phoneNumber, hospitalId);
-        return patientRepository.save(newPatient);
+        try{
+            return patientRepository.save(newPatient);
+        }catch(DataIntegrityViolationException e){
+            throw new IllegalArgumentException("A patient with this phone number is already registered.");
+        }
     }
     //Get patient by id 
     public Patient getPatientById(Long id){
