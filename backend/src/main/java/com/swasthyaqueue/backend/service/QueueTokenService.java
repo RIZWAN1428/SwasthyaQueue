@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -99,8 +100,16 @@ public class QueueTokenService {
         calculateWaitTimesAndAlerts(waitingTokens, department);
 
         for(QueueToken token : waitingTokens){
-            if(Boolean.TRUE.equals(token.getShouldAlert())){
-                alertService.sendAlert(department.getHospitalId(), token.getTokenNumber(), department.getName());
+            boolean alertAlreadySent = Boolean.TRUE.equals(token.getAlertSent());
+
+            if(Boolean.TRUE.equals(token.getShouldAlert())  && !alertAlreadySent){
+                try{
+                    token.setAlertSent(true);
+                    queueTokenRepository.save(token);
+                    alertService.sendAlert(department.getHospitalId(), token.getTokenNumber(), department.getName());
+                }catch(ObjectOptimisticLockingFailureException e){
+                    //another request just claimed this alert, so skip it
+                }
             }
         }
         return waitingTokens;

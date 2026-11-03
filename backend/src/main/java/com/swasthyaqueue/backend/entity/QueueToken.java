@@ -63,6 +63,9 @@ public class QueueToken {
     @Version
     private Long version;
 
+    @Column(name = "alert_sent")
+    private Boolean alertSent = false;
+
     public QueueToken(){}
 
     public QueueToken(Patient patient, Department department, Integer severityScore, String tokenNumber, Long hospitalId){
@@ -124,5 +127,12 @@ public class QueueToken {
 
     public Long getHospitalId(){
         return hospitalId;
+    }
+
+    public Boolean getAlertSent(){
+        return alertSent;
+    }
+    public void setAlertSent(Boolean alertSent){
+        this.alertSent = alertSent;
     }
 }

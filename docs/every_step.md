@@ -105,3 +105,5 @@ update a version and set 0 from null. Now add a friendly
 Cool down, then up again.
 now add same race condition solve in registerpatient, to solve if at a time a duplicate registration happen.
 Now start building, Async support for like slow work, something sending an alert runs on a background thread so user isn't kept waiting. Add @Async method in backendApplication. now will create a alert service in service. now, inject alert service in queue token service. now use this service in getqueuefordeartment, to use it.
+now update the security config to empty user store,so that it stops making its own default user and stops showing message like generate paddword in console.
+now there is a issue, everytime the alertmessage calls, it print same token again....for that we have to implement like something the alert already been sent.....for that we will use flag...so we add one column in queue token entity and set it as false. and for that we make getter and setter there.
