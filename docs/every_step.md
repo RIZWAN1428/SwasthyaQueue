@@ -104,3 +104,4 @@ now we will implement optimist locking to resolve this error by implementing ver
 update a version and set 0 from null. Now add a friendly 
 Cool down, then up again.
 now add same race condition solve in registerpatient, to solve if at a time a duplicate registration happen.
+Now start building, Async support for like slow work, something sending an alert runs on a background thread so user isn't kept waiting. Add @Async method in backendApplication. now will create a alert service in service. now, inject alert service in queue token service. now use this service in getqueuefordeartment, to use it.

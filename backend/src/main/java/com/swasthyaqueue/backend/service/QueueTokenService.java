@@ -40,6 +40,9 @@ public class QueueTokenService {
     @Autowired
     private DepartmentPrerequisiteRepository departmentPrerequisiteRepository;
 
+    @Autowired 
+    private AlertService alertService;
+
     //Create a Token
     public QueueToken createToken(Long patientId, Long departmentId, Integer severityScore) {
 
@@ -94,6 +97,12 @@ public class QueueTokenService {
 
         //Calculate wait timing per department for each patients.
         calculateWaitTimesAndAlerts(waitingTokens, department);
+
+        for(QueueToken token : waitingTokens){
+            if(Boolean.TRUE.equals(token.getShouldAlert())){
+                alertService.sendAlert(department.getHospitalId(), token.getTokenNumber(), department.getName());
+            }
+        }
         return waitingTokens;
     }
     //Build a Calculate priority Score
