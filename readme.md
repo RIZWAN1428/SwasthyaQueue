@@ -154,12 +154,12 @@ To run only these (no Docker needed): `./mvnw test -Dtest="*ServiceTest"`. The g
 - **A misspelled setter parameter** (`estimateWaitMinutes`) quietly did nothing. No error, just a null that I traced for a while.
 - **Race conditions.** Two staff completing the same token at once, and two requests registering the same phone number at once. I forced both with a 3 second pause to prove them, then fixed them: optimistic locking (`@Version`) for the first, a database unique rule plus a clear error message for the second. Token numbers come from a Postgres sequence for the same reason.
 - **Slow work blocking requests.** Alerts run with `@Async`, so a request returns in about 50 ms instead of waiting for the alert. A `alertSent` flag stops the same alert going out on every refresh.
+- **N+1 queries.** Showing patient names on the queue fired one database query per patient. Hibernate's SQL log made it obvious (3 patients, 3 queries). `@BatchSize` on `Patient` loads them together, so it's one query now.
 
 My rough build diary is in [docs/every_step.md](docs/every_step.md). It's messy, written as I went.
 
 ## What it doesn't do yet
 
-- The public queue page still returns patient names. For real use it should show token numbers only.
 - The JWT is kept in `localStorage`, which is simple but open to XSS. An httpOnly cookie would be safer.
 - `ADMIN` can't use the `STAFF` endpoints, because roles are not hierarchical here.
 - Hospitals and the first admin are created with SQL. There's no UI for that.
