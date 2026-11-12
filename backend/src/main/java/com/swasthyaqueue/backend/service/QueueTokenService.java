@@ -219,7 +219,7 @@ public class QueueTokenService {
         double avgTimePerPatient = (department.getAvgTime() != null) ? department.getAvgTime() : 10.0;
         double estimatedWait = peopleAhead * avgTimePerPatient;
         token.setEstimatedWaitMinutes(estimatedWait);
-        token.setShouldAlert(estimatedWait <= 15);
+        token.setShouldAlert(estimatedWait < 15);
     }
 }
    
