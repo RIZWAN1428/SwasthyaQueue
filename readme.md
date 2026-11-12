@@ -1,5 +1,5 @@
 # SwasthyaQueue
-
+![CI](https://github.com/RIZWAN1428/SwasthyaQueue/actions/workflows/ci.yml/badge.svg)
 A queue and triage system for busy hospitals, the kind of government or public hospital where hundreds of people turn up and nobody really knows how long they'll wait.
 
 I built this to learn backend engineering properly. Instead of a to-do app, I picked a problem with real design questions: who should be seen first, what happens when two staff click the same button at once, and how one system can serve many hospitals without mixing their data up.
