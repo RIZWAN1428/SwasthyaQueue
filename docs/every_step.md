@@ -109,4 +109,7 @@ now update the security config to empty user store,so that it stops making its o
 now there is a issue, everytime the alertmessage calls, it print same token again....for that we have to implement like something the alert already been sent.....for that we will use flag...so we add one column in queue token entity and set it as false. and for that we make getter and setter there.
 Now start build unit tests on junit test branch.....for this build first file to unit test patient service where it fake dependecies.
 Now for a token that's already completed or submitted can't be completed again and a staff member can't complete another hospital's token
-now write test methof in queuetoken service to test wait time and aleerts......then merge the junit test to main.
+now write test methof in queuetoken service to test wait time and aleerts......then merge the junit test to main. 
+
+There is a point where in GET /api/queue-tokens/department/{id}, patient name and patient id showing.....so it's real privacy security issue, we just add in currentuser a helper to check the user is staff or someone from public. accordingly we show the result.
+In queuetokencontroller we add ternary operator to check if user logged in then show if not then not show up.

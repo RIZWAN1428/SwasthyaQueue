@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.swasthyaqueue.backend.dto.QueueTokenResponse;
 import com.swasthyaqueue.backend.dto.TokenCreateRequest;
 import com.swasthyaqueue.backend.entity.QueueToken;
+import com.swasthyaqueue.backend.security.CurrentUser;
 import com.swasthyaqueue.backend.service.QueueTokenService;
 
 @RestController 
@@ -56,11 +57,13 @@ public class QueueTokenController {
 
     //Private helper method to extract a method.
     private QueueTokenResponse toResponse(QueueToken token) {
+
+        boolean showPatient = CurrentUser.isLoggedIn();
         return new QueueTokenResponse(
             token.getId(),
             token.getTokenNumber(),
-            token.getPatient().getId(),
-            token.getPatient().getFullName(),
+            showPatient ? token.getPatient().getId() : null,
+            showPatient ? token.getPatient().getFullName() : null,
             token.getDepartment().getId(),
             token.getDepartment().getName(),
             token.getSeverityScore(),
