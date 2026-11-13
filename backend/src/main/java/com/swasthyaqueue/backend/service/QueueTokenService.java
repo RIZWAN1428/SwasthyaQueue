@@ -2,8 +2,10 @@ package com.swasthyaqueue.backend.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -86,15 +88,7 @@ public class QueueTokenService {
         Department department = departmentResult.get();
         List<QueueToken> waitingTokens = queueTokenRepository.findByDepartmentAndStatus(department, TokenStatus.WAITING);
 
-        for(QueueToken token : waitingTokens){
-            double score = calculatePriorityScore(token);
-            token.setPriorityScore(score);
-
-            String redisKey = buildRedisKey(token.getId());
-            redisTemplate.opsForValue().set(redisKey, String.valueOf(score));
-        }
-
-        waitingTokens.sort((a,b) -> Double.compare(b.getPriorityScore(), a.getPriorityScore()));
+       scoreAndSort(waitingTokens);
 
         //Calculate wait timing per department for each patients.
         calculateWaitTimesAndAlerts(waitingTokens, department);
@@ -133,18 +127,21 @@ public class QueueTokenService {
         Department department = departmentResult.get();
         List<QueueToken> allTokens = queueTokenRepository.findByDepartment(department);
 
-        int peopleAhead = 0;
-        for(QueueToken token : allTokens){
-            if(token.getStatus()  == TokenStatus.WAITING){
-                double avgTimePerPatient = (department.getAvgTime() != null) ? department.getAvgTime() : 10.0;
-                double estimatedWait = peopleAhead * avgTimePerPatient;
-                token.setEstimatedWaitMinutes(estimatedWait);
-                token.setShouldAlert(estimatedWait <= 15);
-                peopleAhead++;
-            }
-        }
+        List<QueueToken> waiting = allTokens.stream()
+        .filter(t -> t.getStatus() == TokenStatus.WAITING)
+        .collect(Collectors.toList());
 
-        return allTokens;
+        List<QueueToken> others = allTokens.stream()
+            .filter(t -> t.getStatus() != TokenStatus.WAITING)
+            .collect(Collectors.toList());
+
+        scoreAndSort(waiting);
+        calculateWaitTimesAndAlerts(waiting, department);
+
+        List<QueueToken> result = new ArrayList<>(waiting);
+        result.addAll(others);
+
+        return result;
     }
     
     //Schedule method for write value in postgres from redis at 30 sec
@@ -222,7 +219,17 @@ public class QueueTokenService {
         token.setShouldAlert(estimatedWait <= 15);
     }
 }
-   
+
+    //Helper method for show on based of priority
+
+    private void scoreAndSort(List<QueueToken> waitingTokens) {
+    for (QueueToken token : waitingTokens) {
+        double score = calculatePriorityScore(token);
+        token.setPriorityScore(score);
+        redisTemplate.opsForValue().set(buildRedisKey(token.getId()), String.valueOf(score));
+    }
+    waitingTokens.sort((a, b) -> Double.compare(b.getPriorityScore(), a.getPriorityScore()));
+}
 
 }   
 
