@@ -9,3 +9,7 @@ frontend/dist/
 
 # IDE
 .vscode/
+
+# Python (OCR service)
+ocr-service/.venv/
+__pycache__/

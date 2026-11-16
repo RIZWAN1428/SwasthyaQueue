@@ -110,8 +110,11 @@ now there is a issue, everytime the alertmessage calls, it print same token agai
 Now start build unit tests on junit test branch.....for this build first file to unit test patient service where it fake dependecies.
 Now for a token that's already completed or submitted can't be completed again and a staff member can't complete another hospital's token
 now write test methof in queuetoken service to test wait time and aleerts......then merge the junit test to main. 
-
 There is a point where in GET /api/queue-tokens/department/{id}, patient name and patient id showing.....so it's real privacy security issue, we just add in currentuser a helper to check the user is staff or someone from public. accordingly we show the result.
 In queuetokencontroller we add ternary operator to check if user logged in then show if not then not show up.
 There is a issue when patient called lazily, it called patient query for every token, thats called n+1 problems, means 1 query for tokens and n queries fr patient.....so for solving this we  willimplement batch size...we can also implement join fetch or entitygraph, but thatswhen we do when we need like eevery caller needs a patient, now publilc expect different repsonse and staff login dis=fferent for that we will use batch size for public api not called the patients but for staffit called in1 query whatever the limitwe fixed lets say 50.
 now build github action ci pipeline so that on every push and on every pull it test.
+Now startbuilding AI part, first try to build ocr pipeline, so a prescription and report read by llm and extract the text from it.
+for first we create a virtual enviornment , its like a private folder for python packages.then install  the required library.
+using rapidocr a ocr itself, onnx runtime to runs the model on cpu. pymupdf , pdf reading and page reading. fastapi and uvicorn is the small web server our service will use , python-multipart lets it accepts file uploads.
+Currently the text and value which is together in pdf but landing differently, now as ocr box has coordinates, boxes whose vertical position are close belong to the same row, so we group them by height and sort each row left to right. and some text are left in page so we implement text layer rung to read more pricesly.......now we build extract.py and try_create.py scripts to run and check working fine or not.
