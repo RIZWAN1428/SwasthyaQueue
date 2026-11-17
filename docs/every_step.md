@@ -118,3 +118,7 @@ Now startbuilding AI part, first try to build ocr pipeline, so a prescription an
 for first we create a virtual enviornment , its like a private folder for python packages.then install  the required library.
 using rapidocr a ocr itself, onnx runtime to runs the model on cpu. pymupdf , pdf reading and page reading. fastapi and uvicorn is the small web server our service will use , python-multipart lets it accepts file uploads.
 Currently the text and value which is together in pdf but landing differently, now as ocr box has coordinates, boxes whose vertical position are close belong to the same row, so we group them by height and sort each row left to right. and some text are left in page so we implement text layer rung to read more pricesly.......now we build extract.py and try_create.py scripts to run and check working fine or not.
+now as extract python file works, we will make a service file to call by springboot backend. we build one main.py file. by using fast api.....writeget and postmethod with global exception handlling....await filereading and threading too, so that {OCR is slow, CPU-heavy work, and running it directly inside an async function would freeze the whole server, including /health, until it finished. This line(runs_in_threadpool) moves it onto a separate thread and frees the main one.}  
+main:app -> in the file main.py run the object called app. 
+--reload-> restarts automatically when u save code, like spring dev tools.
+
