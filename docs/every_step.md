@@ -121,4 +121,7 @@ Currently the text and value which is together in pdf but landing differently, n
 now as extract python file works, we will make a service file to call by springboot backend. we build one main.py file. by using fast api.....writeget and postmethod with global exception handlling....await filereading and threading too, so that {OCR is slow, CPU-heavy work, and running it directly inside an async function would freeze the whole server, including /health, until it finished. This line(runs_in_threadpool) moves it onto a separate thread and frees the main one.}  
 main:app -> in the file main.py run the object called app. 
 --reload-> restarts automatically when u save code, like spring dev tools.
+Now we build one file, for likekeeping http details in one file in springboot app so that other file not even know the ocr service even exist.
+first we decide the shape of reply. for this we write dto and in this we use record, which is java 17 's short way of write read only data class.like one line give all the filds, costructor, getters.The names match the JSON the Python service returns, so Jackson fills it in automatically, the same way @RequestBody fills request DTOs.
+Now we will tie up all together.......so gonna build repository and service, for when staff uppload a file, the app should check that patient belong to their hospital, check the file is acceptable , save the file and read it with ocr.......and if ocr fails , upload must not be lost.
 
