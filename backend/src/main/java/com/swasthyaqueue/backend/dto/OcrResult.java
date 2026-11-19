@@ -1,6 +1,8 @@
 package com.swasthyaqueue.backend.dto;
 
-public record OcrResult() {
+import java.util.List;
+
+public record OcrResult(String filename, List<Page> pages) {
 
     public record Page(int page, String method, double confidence, String text) {
     }

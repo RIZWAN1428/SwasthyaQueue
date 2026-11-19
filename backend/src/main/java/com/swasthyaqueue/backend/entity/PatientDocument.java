@@ -88,7 +88,7 @@ public class PatientDocument {
     public Long getId(){
         return id;
     }
-    public Long getoHspitalId(){
+    public Long getHospitalId(){
         return hospitalId;
     }
     public Patient getPatient(){
